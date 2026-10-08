@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NoctuMath — Math is Fun When You See How!</title>
+<meta name="description" content="Free step-by-step math practice for K-12: addition, subtraction, multiplication and division with picture visuals, smart hints and memory tips." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20140%20140%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%25237c3aed%27/%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%25230ea5e9%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20x%3D%274%27%20y%3D%274%27%20width%3D%27132%27%20height%3D%27132%27%20rx%3D%2730%27%20fill%3D%27url%28%2523g%29%27/%3E%3Ctext%20x%3D%2770%27%20y%3D%2794%27%20text-anchor%3D%27middle%27%20font-size%3D%2762%27%3E%F0%9F%A6%89%3C/text%3E%3Ccircle%20cx%3D%2730%27%20cy%3D%2732%27%20r%3D%2711%27%20fill%3D%27%252334d399%27/%3E%3Ccircle%20cx%3D%27110%27%20cy%3D%2734%27%20r%3D%2711%27%20fill%3D%27%2523fb923c%27/%3E%3Ccircle%20cx%3D%2716%27%20cy%3D%2792%27%20r%3D%2711%27%20fill%3D%27%2523a78bfa%27/%3E%3Ccircle%20cx%3D%27124%27%20cy%3D%2792%27%20r%3D%2711%27%20fill%3D%27%252338bdf8%27/%3E%3Ccircle%20cx%3D%2770%27%20cy%3D%2716%27%20r%3D%2711%27%20fill%3D%27%2523fbbf24%27/%3E%3C/svg%3E" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>tailwind.config={theme:{extend:{fontFamily:{display:["Fredoka","sans-serif"],sans:["Inter","system-ui","sans-serif"]}}}}</script>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap");
+body{font-family:"Inter",system-ui,sans-serif}
+.owl-bg{background:radial-gradient(circle at 18% 12%,rgba(139,92,246,.28),transparent 55%),radial-gradient(circle at 85% 80%,rgba(14,165,233,.25),transparent 55%),radial-gradient(circle at 55% 110%,rgba(16,185,129,.18),transparent 50%),linear-gradient(135deg,#0b1120 0%,#1e1b4b 45%,#082f49 100%)}
+h1,h2,.font-display{font-family:"Fredoka",sans-serif}
+::selection{background:#fbbf24;color:#0f172a}
+.op-add{--op:#34d399;--opL:#064e3b55}.op-sub{--op:#fb923c;--opL:#7c2d1255}
+.op-mul{--op:#a78bfa;--opL:#4c1d9555}.op-div{--op:#38bdf8;--opL:#0c4a6e55}
+.opc{color:var(--op)}.opb{border-color:var(--op)}.opL{background:var(--opL)}
+.step{opacity:0;transform:translateY(10px) scale(.98);animation:stepIn .45s cubic-bezier(.2,1.2,.4,1) forwards}
+@keyframes stepIn{to{opacity:1;transform:none}}
+.pop{animation:pop .35s cubic-bezier(.2,1.6,.4,1)}@keyframes pop{0%{transform:scale(.5)}100%{transform:scale(1)}}
+.shake{animation:shake .4s}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.bounce-slow{animation:bnc 2.2s ease-in-out infinite}@keyframes bnc{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-10px) rotate(4deg)}}
+.glow{text-shadow:0 0 24px rgba(251,191,36,.4)}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.star{position:absolute;border-radius:50%;animation:tw ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.12;transform:scale(.75)}50%{opacity:.95;transform:scale(1.2)}}
+.shoot{position:absolute;height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,.95),rgba(255,255,255,0));animation:shootA linear forwards;transform:rotate(-35deg)}
+@keyframes shootA{0%{transform:rotate(-35deg) translateX(0);opacity:1}100%{transform:rotate(-35deg) translateX(-460px);opacity:0}}
+.lg-owl{animation:lgBounce 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes lgBounce{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
+.lg-ring{animation:lgSpin 44s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes lgSpin{to{transform:rotate(360deg)}}
+.lg-sym{animation:lgFloat 2.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes lgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.vc{font-family:"Fredoka",sans-serif}
+.vc-box{width:2.4rem;height:2.8rem;display:inline-flex;align-items:center;justify-content:center;border:2.5px solid #475569;border-radius:.7rem;font-weight:700;font-size:1.35rem;background:#0f172a;color:#f1f5f9;transition:all .25s;margin:0 .18rem;vertical-align:top}
+.vc-box.lit{transform:scale(1.2) rotate(-2deg);background:var(--opL);border-color:var(--op);box-shadow:0 6px 18px -4px var(--op);color:#fff}
+.vc-box.newdigit{animation:digIn .4s cubic-bezier(.2,1.6,.4,1)}
+@keyframes digIn{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
+.vc-sign{width:2rem;text-align:center;font-weight:700;font-size:1.3rem;display:inline-flex;align-items:center;justify-content:center;color:var(--op)}
+.vc-carry{display:inline-flex;align-items:center;justify-content:center;min-width:1.8rem;font-size:1.05rem;font-weight:700;color:#0f172a;background:var(--op);border-radius:.55rem;padding:.15rem .45rem;animation:carryHop .65s cubic-bezier(.2,1.6,.4,1);box-shadow:0 5px 12px -3px var(--op);position:relative}
+.vc-gap{position:relative}
+.vc-gap .vc-carry::after{content:"";position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);border:5px solid transparent;border-top:6px solid var(--op)}
+@keyframes carryHop{0%{transform:translateY(-14px) scale(.4);opacity:0}60%{transform:translateY(2px) scale(1.15)}100%{transform:translateY(0) scale(1)}}
+.tally-group{display:inline-flex;align-items:flex-end;background:#1e293b;border:1px solid #334155;border-radius:.5rem;padding:.3rem .45rem;margin:0 .4rem .35rem 0}
+.tally-bar{width:3px;height:22px;background:#fbbf24;border-radius:2px;display:inline-block;margin:0 2.5px}
+.tally-bar.slash{transform:rotate(42deg);transform-origin:bottom center;background:#fb923c;margin-left:-5px;margin-right:4px}
+.vc-line{border-top:3px dashed #334155;margin:.4rem 0 .4rem 2.2rem}
+.vc-row{margin:.25rem 0;display:flex;align-items:center}
+.vc-gap{width:2.4rem;margin:0 .18rem;display:inline-block;text-align:center;color:#475569;font-weight:700;position:relative}
+.qbox{width:2.6rem;height:3rem;display:inline-flex;align-items:center;justify-content:center;border:2.5px dashed #475569;border-radius:.7rem;font-weight:700;font-size:1.4rem;background:#0f172a;margin:0 .18rem;color:#94a3b8}
+.qbox.filled{border-style:solid;border-color:var(--op);background:var(--opL);color:#fff;animation:digIn .4s cubic-bezier(.2,1.6,.4,1)}
+.ask-in{width:4.2rem;background:#0f172a;border:2.5px solid #64748b;border-radius:.6rem;color:#fff;font-family:"Fredoka",sans-serif;font-weight:700;font-size:1.1rem;text-align:center;padding:.15rem 0;margin:0 .35rem;outline:none;transition:.2s}
+.ask-in:focus{border-color:var(--op);box-shadow:0 0 0 3px var(--opL)}
+.ask-in.good{border-color:#34d399;background:#064e3b;color:#fff}
+.ask-in.bad{border-color:#f43f5e;animation:shake .35s}
+.step.solved .ask-in{border-color:#34d399;background:#064e3b}
+.confetti{position:fixed;top:-12px;z-index:99;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
+</style>
+</head>
+<body class="min-h-screen text-slate-200 owl-bg">
+<div id="stars"></div>
+
+<div id="paywall2" class="fixed inset-0 z-[70] hidden items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm">
+  <div class="w-full max-w-md bg-slate-800 border-2 border-amber-400/50 rounded-3xl shadow-2xl overflow-hidden">
+    <div class="p-6 border-b border-slate-700 flex items-start justify-between">
+      <div><h3 class="text-xl font-display font-bold text-white">⭐ Parent Plan</h3><p class="text-xs text-slate-400 mt-1">Dashboard · Worksheets · Past problems · Saved progress · Unlimited quizzes</p></div>
+      <button onclick="closePaywall()" class="text-slate-400 hover:text-white p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <div id="pw2-pay" class="p-6 space-y-4">
+      <div class="grid grid-cols-2 gap-2 p-1 bg-slate-900 rounded-xl">
+        <button id="plan-m" onclick="setPlan('m')" class="py-2.5 rounded-lg text-sm font-bold transition-all bg-amber-400 text-slate-900">$4.99/mo</button>
+        <button id="plan-y" onclick="setPlan('y')" class="py-2.5 rounded-lg text-sm font-bold transition-all text-slate-400">$39/yr · save 2 mo</button>
+      </div>
+      <input placeholder="Card number" value="4242 4242 4242 4242" class="w-full bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm font-mono text-white">
+      <div class="grid grid-cols-2 gap-2"><input placeholder="MM / YY" value="12 / 28" class="bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm font-mono text-white"><input placeholder="CVC" value="424" class="bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm font-mono text-white"></div>
+      <button onclick="fakePay2()" id="pw2-btn" class="w-full bg-gradient-to-r from-amber-400 to-orange-500 text-white font-display font-bold py-3.5 rounded-xl transition-all">Pay $4.99/mo</button>
+      <p class="text-[11px] text-slate-500 text-center">Renews at your plan price until canceled · Cancel anytime in Account Settings<br/>Demo checkout — no real charge</p>
+    </div>
+    <div id="pw2-done" class="p-10 text-center hidden">
+      <div class="text-6xl mb-3 pop">🎉</div>
+      <h3 class="text-xl font-display font-bold text-white">Welcome to Parent Plan!</h3>
+      <p class="text-sm text-slate-400 mt-1 mb-5">Everything is unlocked on this device.</p>
+      <button onclick="closePaywall();enterApp()" class="bg-amber-400 text-slate-900 font-display font-bold px-6 py-3 rounded-xl">Continue 🦉</button>
+    </div>
+  </div>
+</div>
+<div id="fb-thanks" class="fixed inset-0 z-[80] hidden items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm">
+  <div class="bg-slate-800 border-2 border-amber-400/60 rounded-3xl p-10 text-center max-w-sm pop">
+    <div class="text-6xl mb-4">🦉💜</div>
+    <h3 class="text-2xl font-display font-bold text-white">Thank Hoo!</h3>
+    <p class="text-sm text-slate-400 mt-2 mb-6">Your feedback flew straight to our nest. We read every single word — hoot hoot! 🪶</p>
+    <button onclick="document.getElementById('fb-thanks').classList.add('hidden');document.getElementById('fb-thanks').classList.remove('flex')" class="bg-amber-400 text-slate-900 font-display font-bold px-6 py-3 rounded-xl">You're welcome!</button>
+  </div>
+</div>
+<!-- LEGAL -->
+<div id="legal" class="fixed inset-0 z-[85] hidden overflow-y-auto bg-slate-950/97 backdrop-blur">
+  <div class="max-w-3xl mx-auto px-6 py-10">
+    <div class="flex items-center justify-between mb-8 sticky top-0 bg-slate-950/90 backdrop-blur py-3 z-10">
+      <div class="flex items-center gap-2.5"><span class="text-2xl">⚖️</span><b id="legal-title" class="text-white text-lg font-display">Privacy Policy</b></div>
+      <button onclick="hideLegal()" class="text-slate-400 hover:text-white bg-slate-800 px-4 py-2 rounded-lg text-xs font-semibold">Close ✕</button>
+    </div>
+    <div id="legal-body" class="space-y-4 text-[13.5px] text-slate-300 leading-relaxed pb-10"></div>
+  </div>
+</div>
+
+<!-- COOKIE CONSENT -->
+<div id="cookie-banner" class="fixed bottom-4 left-4 right-4 sm:right-auto sm:max-w-md z-[88] hidden">
+  <div class="bg-slate-800/95 backdrop-blur rounded-2xl border border-slate-600 p-4 shadow-2xl">
+    <p class="text-xs text-slate-300 leading-relaxed"><b class="text-white block mb-1">🍪 We use cookies</b>NoctuMath uses cookies/local storage to remember students, save progress (Parent Plan) and keep the site working. We never use tracking or advertising cookies — especially for kids.</p>
+    <div class="flex gap-2 mt-3">
+      <button onclick="acceptCookies()" class="flex-1 bg-amber-400 hover:bg-amber-300 text-slate-900 py-2 rounded-lg text-xs font-bold transition-all">Accept</button>
+      <button onclick="declineCookies()" class="px-3 bg-slate-700 hover:bg-slate-600 text-slate-300 py-2 rounded-lg text-xs font-semibold transition-all">Decline</button>
+    </div>
+  </div>
+</div>
+<div id="confetti"></div>
+
+<!-- ==================== LANDING / HOME PAGE ==================== -->
+<div id="landing" class="min-h-screen">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-2.5">
+      <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" style="width:72px;height:72px">
+<defs><linearGradient id="lgY" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs>
+<g class="lg-ring"><circle cx="70" cy="74" r="62" fill="none" stroke="#fbbf24" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="3 7"/></g>
+<circle cx="70" cy="76" r="46" fill="url(#lgY)"/>
+<g class="lg-owl"><text x="70" y="100" text-anchor="middle" font-size="64">🦉</text></g>
+<text class="lg-sym" style="animation-duration:2.4s;animation-delay:0.0s;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))" x="26" y="42" text-anchor="middle" font-size="24" font-weight="800" fill="#34d399" font-family="Fredoka,Arial">+</text><text class="lg-sym" style="animation-duration:2.75s;animation-delay:0.3s;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))" x="116" y="48" text-anchor="middle" font-size="36" font-weight="800" fill="#fb923c" font-family="Fredoka,Arial">−</text><text class="lg-sym" style="animation-duration:3.0999999999999996s;animation-delay:0.6s;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))" x="12" y="106" text-anchor="middle" font-size="34" font-weight="800" fill="#a78bfa" font-family="Fredoka,Arial">×</text><text class="lg-sym" style="animation-duration:3.4499999999999997s;animation-delay:0.8999999999999999s;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))" x="128" y="106" text-anchor="middle" font-size="34" font-weight="800" fill="#38bdf8" font-family="Fredoka,Arial">÷</text><text class="lg-sym" style="animation-duration:3.8s;animation-delay:1.2s;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))" x="70" y="26" text-anchor="middle" font-size="30" font-weight="800" fill="#fbbf24" font-family="Fredoka,Arial">=</text></svg>
+      <div><b class="text-xl font-display text-white tracking-tight leading-none">Noctu<span class="text-amber-400">Math</span></b>
+      <p class="text-[9px] font-bold text-amber-300/90 tracking-wide mt-0.5">Hoo-ver Knew Math Could Be This Fun!</p></div>
+    </div>
+    <div class="flex items-center gap-2.5">
+      <span class="hidden md:inline-flex items-center gap-1.5 text-xs font-bold text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-1.5 rounded-full">💚 Affordable — just $4.99/mo</span>
+      <button onclick="openPaywall()" class="hidden sm:block text-sm font-bold text-amber-300 hover:text-amber-200 px-3 transition-colors">Parent Plan</button>
+      <button onclick="enterApp()" class="bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all shadow-lg shadow-teal-900/40">🚀 Let's Start!</button>
+    </div>
+  </nav>
+
+  <header class="max-w-4xl mx-auto px-6 pt-14 pb-12 text-center">
+    <span class="inline-flex items-center gap-2 text-xs font-bold text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-4 py-1.5 rounded-full mb-6">✅ Free forever · No ads · K–8</span>
+    <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight leading-tight">Kids learn math when they see <span class="glow text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-violet-400 to-sky-400">how it works</span></h1>
+    <p class="font-display text-xl md:text-2xl font-bold text-amber-300 mt-5">Hoo-ver Knew Math Could Be This Fun! 🦉</p>
+    <p class="text-slate-400 mt-3 max-w-xl mx-auto font-medium">Step-by-step picture explanations, smart hints, memory tricks, and a friendly owl — for every answer, right or wrong. Grades K–8, four operations, zero frustration.</p>
+    <div class="flex flex-wrap justify-center gap-3 mt-8">
+      <button onclick="enterApp()" class="bg-white hover:bg-slate-100 text-slate-900 font-display font-bold text-lg px-8 py-4 rounded-2xl transition-all shadow-xl">Start free — no signup</button>
+      <button onclick="openPaywall()" class="bg-slate-800/70 hover:bg-slate-700 border-2 border-amber-400/40 text-amber-300 font-display font-bold text-lg px-8 py-4 rounded-2xl transition-all">⭐ Parent Plan</button>
+    </div>
+    <p class="text-emerald-300/90 text-sm font-bold mt-4">🛡️ No ads interrupting the learning — every practice flow stays clean and focused.</p>
+    <p class="text-xs text-slate-500 font-bold mt-2">Parents: see progress, printable worksheets &amp; smart review for less than a coffee ☕</p>
+  </header>
+
+  <section class="max-w-4xl mx-auto px-6 pb-12">
+    <h2 class="text-center text-xs font-extrabold uppercase tracking-widest text-slate-400 mb-5">📐 Exactly what we teach — the four core operations, nothing else to figure out</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="bg-slate-800/60 border-2 border-emerald-500/30 rounded-2xl p-5 text-center"><span class="text-3xl">➕</span><h3 class="font-display font-bold text-white mt-2">Adding</h3><p class="text-xs text-slate-400 mt-1">With carrying, step by step</p><p class="text-[10px] font-bold text-emerald-400 mt-2">e.g. 47 + 38</p></div>
+      <div class="bg-slate-800/60 border-2 border-orange-500/30 rounded-2xl p-5 text-center"><span class="text-3xl">➖</span><h3 class="font-display font-bold text-white mt-2">Taking Away</h3><p class="text-xs text-slate-400 mt-1">With borrowing, made friendly</p><p class="text-[10px] font-bold text-orange-400 mt-2">e.g. 52 − 27</p></div>
+      <div class="bg-slate-800/60 border-2 border-violet-500/30 rounded-2xl p-5 text-center"><span class="text-3xl">✖️</span><h3 class="font-display font-bold text-white mt-2">Times</h3><p class="text-xs text-slate-400 mt-1">Tables → 2-digit multiplication</p><p class="text-[10px] font-bold text-violet-400 mt-2">e.g. 23 × 14</p></div>
+      <div class="bg-slate-800/60 border-2 border-sky-500/30 rounded-2xl p-5 text-center"><span class="text-3xl">➗</span><h3 class="font-display font-bold text-white mt-2">Sharing</h3><p class="text-xs text-slate-400 mt-1">From pizza plates to long division</p><p class="text-[10px] font-bold text-sky-400 mt-2">e.g. 96 ÷ 4</p></div>
+    </div>
+    <p class="text-center text-xs text-slate-500 font-bold mt-4">Grades K–8 · each operation taught with pictures, interactive steps &amp; memory tricks</p>
+  </section>
+
+  <section class="max-w-5xl mx-auto px-6 pb-14">
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div class="bg-slate-800/60 border border-slate-700 rounded-2xl p-6"><span class="text-3xl">🖼️</span><h3 class="font-display font-bold text-white mt-3 mb-1">Picture-first steps</h3><p class="text-sm text-slate-400">Number lines, star arrays and pizza-sharing before any column math — kids understand, not memorize.</p></div>
+      <div class="bg-slate-800/60 border border-slate-700 rounded-2xl p-6"><span class="text-3xl">✋</span><h3 class="font-display font-bold text-white mt-3 mb-1">Interactive solving</h3><p class="text-sm text-slate-400">Students type each step themselves — the digits fill in as they go. Plus tally marks &amp; counting stars when stuck.</p></div>
+      <div class="bg-slate-800/60 border border-slate-700 rounded-2xl p-6"><span class="text-3xl">⚡</span><h3 class="font-display font-bold text-white mt-3 mb-1">Timed quizzes &amp; grades</h3><p class="text-sm text-slate-400">Custom-length quizzes, per-question or whole-test timers, report cards with grades and personal bests.</p></div>
+      <div class="bg-slate-800/60 border border-slate-700 rounded-2xl p-6"><span class="text-3xl">🎒</span><h3 class="font-display font-bold text-white mt-3 mb-1">True K–8 levels</h3><p class="text-sm text-slate-400">Grade bands K–2 through 7–8 with age-appropriate numbers, language and memory strategies.</p></div>
+      <div class="bg-slate-800/60 border border-slate-700 rounded-2xl p-6"><span class="text-3xl">🧠</span><h3 class="font-display font-bold text-white mt-3 mb-1">Remembers the misses</h3><p class="text-sm text-slate-400">NoctuMath tracks tricky facts and builds a personal Review session so they actually stick.</p></div>
+      <div class="bg-slate-800/60 border border-slate-700 rounded-2xl p-6"><span class="text-3xl">🔒</span><h3 class="font-display font-bold text-white mt-3 mb-1">Private &amp; ad-free</h3><p class="text-sm text-slate-400">No ads, no chat, no data selling. COPPA-conscious by design — progress stays on your device.</p></div>
+    </div>
+  </section>
+
+  <!-- pricing -->
+  <section id="pricing" class="max-w-4xl mx-auto px-6 pb-14">
+    <h2 class="text-center text-3xl font-display font-bold text-white mb-2">Simple pricing</h2>
+    <p class="text-center text-slate-400 mb-9 text-sm">Kids practice free forever. Parents pay for visibility.</p>
+    <div class="grid md:grid-cols-2 gap-5 max-w-3xl mx-auto">
+      <div class="p-8 rounded-3xl bg-slate-800/60 border border-slate-700 flex flex-col">
+        <b class="text-white font-display text-lg">Free</b>
+        <p class="text-4xl font-display font-extrabold text-white mt-2">$0<span class="text-sm text-slate-500 font-medium"> forever</span></p>
+        <ul class="text-sm text-slate-400 space-y-2.5 mt-6 flex-1">
+          <li>✅ Unlimited practice mode with step-by-step help</li>
+          <li>✅ Quizzes up to 10 questions with timers</li>
+          <li>✅ Tally &amp; star tools, notes, personal profile</li>
+          <li>✅ ⭐ Parent Plan saves progress, streaks &amp; reports</li>
+        </ul>
+        <button onclick="enterApp()" class="mt-8 bg-slate-700 hover:bg-slate-600 text-white font-display font-bold py-3.5 rounded-2xl transition-all">Start free</button>
+      </div>
+      <div class="p-8 rounded-3xl bg-gradient-to-b from-amber-400/15 to-transparent border-2 border-amber-400/50 flex flex-col relative">
+        <span class="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] font-bold px-3 py-1 rounded-full bg-amber-400 text-slate-900">FOR PARENTS</span>
+        <b class="text-white font-display text-lg">Parent Plan</b>
+        <p class="text-4xl font-display font-extrabold text-white mt-2">$4.99<span class="text-sm text-slate-400 font-medium">/mo</span></p>
+        <p class="text-xs text-slate-500 font-bold">or <b class="text-amber-300">$39/year — save 2 whole months ($10)!</b></p>
+        <ul class="text-sm text-slate-300 space-y-2.5 mt-5 flex-1">
+          <li>⭐ Full Parent Dashboard — accuracy by operation, activity &amp; quiz history</li>
+          <li>⭐ Smart Review of every tricky fact (not just top 3)</li>
+          <li>⭐ Printable worksheets with answer keys</li>
+          <li>⭐ Unlimited quiz length (up to 50 questions)</li>
+          <li>⭐ Past problems &amp; full learning history</li>
+        </ul>
+        <button onclick="openPaywall()" class="mt-7 bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white font-display font-bold py-3.5 rounded-2xl transition-all shadow-lg shadow-orange-900/40">Unlock Parent Plan</button>
+        <p class="text-[11px] text-slate-500 text-center mt-2">Demo checkout — no real payment yet</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-2xl mx-auto px-6 pb-12">
+    <h2 class="text-2xl font-display font-bold text-white mb-5 text-center">Questions parents ask</h2>
+    <div class="space-y-3">
+      <details class="bg-slate-800/60 border border-slate-700 rounded-xl px-5 py-4"><summary class="cursor-pointer list-none font-semibold text-sm text-white">Is it really free? 🦉</summary><p class="text-sm text-slate-400 mt-2">Yes — all practice and quizzes are free forever, no account needed. The Parent Plan adds progress visibility and worksheets.</p></details>
+      <details class="bg-slate-800/60 border border-slate-700 rounded-xl px-5 py-4"><summary class="cursor-pointer list-none font-semibold text-sm text-white">Is my child's data safe?</summary><p class="text-sm text-slate-400 mt-2">Progress is stored locally on your device. No ads, no trackers, no data selling — and we'll be fully COPPA-compliant before any accounts launch.</p></details>
+      <details class="bg-slate-800/60 border border-slate-700 rounded-xl px-5 py-4"><summary class="cursor-pointer list-none font-semibold text-sm text-white">What makes this different from worksheets?</summary><p class="text-sm text-slate-400 mt-2">Every single answer gets a picture explanation and an interactive step-by-step solve — and the app remembers which facts your child misses for targeted review.</p></details>
+    </div>
+  </section>
+
+  <footer class="border-t border-slate-800 py-8 text-center text-xs font-bold text-slate-500">
+    © 2026 NoctuMath · Made with ❤️ for young mathematicians · <a onclick="showLegal('privacy')" class="hover:text-slate-300 cursor-pointer">Privacy Policy</a> · <a onclick="showLegal('terms')" class="hover:text-slate-300 cursor-pointer">Terms of Service</a> · <a href="mailto:support@noctumath.com" class="hover:text-slate-300">support@noctumath.com</a>
+  </footer>
+</div>
+
+<div id="app" class="hidden">
+<nav class="max-w-5xl mx-auto px-6 pt-6 flex items-center justify-between">
+  <div class="flex items-center gap-2.5">
+    <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" style="width:72px;height:72px">
+<defs><linearGradient id="lgY" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs>
+<g class="lg-ring"><circle cx="70" cy="74" r="62" fill="none" stroke="#fbbf24" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="3 7"/></g>
+<circle cx="70" cy="76" r="46" fill="url(#lgY)"/>
+<g class="lg-owl"><text x="70" y="100" text-anchor="middle" font-size="64">🦉</text></g>
+<text class="lg-sym" style="animation-duration:2.4s;animation-delay:0.0s;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))" x="26" y="42" text-anchor="middle" font-size="24" font-weight="800" fill="#34d399" font-family="Fredoka,Arial">+</text><text class="lg-sym" style="animation-duration:2.75s;animation-delay:0.3s;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))" x="116" y="48" text-anchor="middle" font-size="36" font-weight="800" fill="#fb923c" font-family="Fredoka,Arial">−</text><text class="lg-sym" style="animation-duration:3.0999999999999996s;animation-delay:0.6s;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))" x="12" y="106" text-anchor="middle" font-size="34" font-weight="800" fill="#a78bfa" font-family="Fredoka,Arial">×</text><text class="lg-sym" style="animation-duration:3.4499999999999997s;animation-delay:0.8999999999999999s;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))" x="128" y="106" text-anchor="middle" font-size="34" font-weight="800" fill="#38bdf8" font-family="Fredoka,Arial">÷</text><text class="lg-sym" style="animation-duration:3.8s;animation-delay:1.2s;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))" x="70" y="26" text-anchor="middle" font-size="30" font-weight="800" fill="#fbbf24" font-family="Fredoka,Arial">=</text></svg>
+    <div><b class="text-2xl tracking-tight font-display text-white">Noctu<span class="text-amber-400">Math</span></b><p id="greet" class="text-[10px] font-bold text-slate-500 -mt-1 uppercase tracking-widest">Hoo-ver knew math could be this fun!</p></div>
+  </div>
+  <div class="flex items-center gap-2 text-sm font-bold">
+    <button onclick="showView('account')" title="Account settings" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 border border-slate-700 transition-all"><i data-lucide="settings" class="w-4 h-4"></i></button>
+    <span class="flex items-center gap-1.5 bg-slate-800/80 border-2 border-orange-500/40 rounded-full px-4 py-1.5 text-orange-300">🔥<span id="streak">0</span></span>
+    <span class="flex items-center gap-1.5 bg-slate-800/80 border-2 border-yellow-500/40 rounded-full px-4 py-1.5 text-yellow-300">⭐<span id="score">0</span></span>
+    <button onclick="showLanding()" title="Home page" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 border border-slate-700 transition-all"><i data-lucide="home" class="w-4 h-4"></i></button>
+    <button onclick="showView('setup')" title="Practice — grades &amp; adventures" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 border border-slate-700 transition-all"><i data-lucide="crosshair" class="w-4 h-4"></i></button>
+    <button onclick="proGate('dash')" title="Parent Dashboard ⭐" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 border border-slate-700 transition-all"><i data-lucide="layout-dashboard" class="w-4 h-4"></i></button>
+    <button onclick="proGate('ws')" title="Worksheets ⭐" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 border border-slate-700 transition-all"><i data-lucide="printer" class="w-4 h-4"></i></button>
+    <button onclick="proGate('past')" title="Past problems ⭐" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 border border-slate-700 transition-all"><i data-lucide="history" class="w-4 h-4"></i></button>
+    <button onclick="showView('fbview')" title="Feedback" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 border border-slate-700 transition-all"><i data-lucide="message-square" class="w-4 h-4"></i></button>
+  </div>
+</nav>
+
+<header class="max-w-3xl mx-auto px-6 pt-10 pb-8 text-center">
+  <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-tight text-white">Math is <span class="glow text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-violet-400 to-sky-400">FUN</span><br class="hidden md:block"> when you see how!</h1>
+  <p class="text-slate-400 mt-4 max-w-lg mx-auto font-medium">Pick your grade, answer, and Hoot shows you <b class="text-slate-200">exactly</b> how to solve it — with pictures, practice steps, and memory tricks! 🌈</p>
+</header>
+
+<!-- SETUP -->
+<div id="setup-rec-wrap" class="max-w-2xl mx-auto px-6 mb-5"></div>
+<div id="setup" class="max-w-2xl mx-auto px-6 pb-16">
+  <div class="bg-slate-800/70 backdrop-blur rounded-[2rem] border-2 border-slate-700 shadow-2xl p-7 space-y-7">
+    <div>
+      <div id="kid-chips" class="flex flex-wrap justify-center gap-2 mb-4"></div>
+      <button onclick="obOpen()" class="mb-4 text-xs font-bold text-slate-400 hover:text-white transition-colors inline-flex items-center gap-1">👶 Add a student</button>
+      <label class="block text-xs font-extrabold uppercase tracking-widest text-slate-400 mb-3">🎒 What grade are you in?</label>
+      <div class="grid grid-cols-3 sm:grid-cols-5 gap-2" id="grades"><button data-g="k" class="g-btn rounded-2xl border-[3px] py-3 font-display font-semibold transition-all border-amber-400 bg-amber-400/10 text-amber-300">K</button><button data-g="g1" class="g-btn rounded-2xl border-[3px] py-3 font-display font-semibold transition-all border-slate-600 text-slate-400 hover:border-slate-500">1</button><button data-g="g2" class="g-btn rounded-2xl border-[3px] py-3 font-display font-semibold transition-all border-slate-600 text-slate-400 hover:border-slate-500">2</button><button data-g="g3" class="g-btn rounded-2xl border-[3px] py-3 font-display font-semibold transition-all border-slate-600 text-slate-400 hover:border-slate-500">3</button><button data-g="g4" class="g-btn rounded-2xl border-[3px] py-3 font-display font-semibold transition-all border-slate-600 text-slate-400 hover:border-slate-500">4</button><button data-g="g5" class="g-btn rounded-2xl border-[3px] py-3 font-display font-semibold transition-all border-slate-600 text-slate-400 hover:border-slate-500">5</button><button data-g="g6" class="g-btn rounded-2xl border-[3px] py-3 font-display font-semibold transition-all border-slate-600 text-slate-400 hover:border-slate-500">6</button><button data-g="g7" class="g-btn rounded-2xl border-[3px] py-3 font-display font-semibold transition-all border-slate-600 text-slate-400 hover:border-slate-500">7</button><button data-g="g8" class="g-btn rounded-2xl border-[3px] py-3 font-display font-semibold transition-all border-slate-600 text-slate-400 hover:border-slate-500">8</button></div>
+    </div>
+    <div>
+      <label class="block text-xs font-extrabold uppercase tracking-widest text-slate-400 mb-3">🎯 Pick your adventure</label>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="ops">
+        <button data-op="addition" class="op-btn op-add rounded-2xl border-[3px] py-4 font-display font-semibold text-base transition-all opb opL text-white"><span class="text-2xl mr-1">➕</span>Adding</button>
+        <button data-op="subtraction" class="op-sub op-btn rounded-2xl border-[3px] py-4 font-display font-semibold text-base transition-all border-slate-600 text-slate-400 hover:border-slate-500"><span class="text-2xl mr-1">➖</span>Taking Away</button>
+        <button data-op="multiplication" class="op-mul op-btn rounded-2xl border-[3px] py-4 font-display font-semibold text-base transition-all border-slate-600 text-slate-400 hover:border-slate-500"><span class="text-2xl mr-1">✖️</span>Times</button>
+        <button data-op="division" class="op-div op-btn rounded-2xl border-[3px] py-4 font-display font-semibold text-base transition-all border-slate-600 text-slate-400 hover:border-slate-500"><span class="text-2xl mr-1">➗</span>Sharing</button>
+        <button data-op="mixed" class="op-btn col-span-2 sm:col-span-1 rounded-2xl border-[3px] py-4 font-display font-semibold text-base transition-all border-slate-600 text-slate-400 hover:border-slate-500"><span class="text-2xl mr-1">🎲</span>Surprise!</button>
+      </div>
+      <p id="grade-note" class="text-[11px] text-slate-500 font-semibold mt-2 hidden"></p>
+    </div>
+    <div>
+      <label class="block text-xs font-extrabold uppercase tracking-widest text-slate-400 mb-3">🎮 Choose your mode</label>
+      <div class="grid grid-cols-2 gap-3" id="modes">
+        <button data-m="practice" class="m-btn rounded-2xl border-[3px] py-3.5 font-display font-semibold transition-all border-emerald-400 bg-emerald-400/10 text-emerald-300">🎓 Practice<br><span class="text-[10px] font-bold opacity-70">Hoot helps step by step</span></button>
+        <button data-m="quiz" class="m-btn rounded-2xl border-[3px] py-3.5 font-display font-semibold transition-all border-slate-600 text-slate-400 hover:border-slate-500">⚡ Quiz<br><span class="text-[10px] font-bold opacity-70">No help · timed · graded</span></button>
+      </div>
+      <div id="quiz-cfg" class="hidden grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
+        <div><label class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1.5">Questions</label><input id="cfg-count" type="number" min="1" max="50" value="10" class="w-full bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm font-bold text-white focus:outline-none focus:border-amber-400"></div>
+        <div><label class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1.5">Timer</label><select id="cfg-tmode" class="w-full bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm font-bold text-white"><option value="none">No timer</option><option value="each" selected>Each question</option><option value="total">Whole test</option></select></div>
+        <div><label class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1.5" id="cfg-value-label">Seconds per question</label><input id="cfg-value" type="number" min="3" max="600" value="20" class="w-full bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm font-bold text-white focus:outline-none focus:border-amber-400"></div>
+      </div>
+    </div>
+    <div id="review-slot"></div>
+    <button onclick="startQuiz()" class="w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-sky-500 hover:from-emerald-600 hover:via-teal-600 hover:to-sky-600 text-white font-display font-bold text-xl py-4 rounded-2xl transition-all shadow-xl shadow-teal-900/50 flex items-center justify-center gap-2"><span class="text-2xl">🚀</span>Let's go!</button>
+  </div>
+</div>
+
+<!-- ONBOARDING -->
+<div id="onboard" class="max-w-md mx-auto px-6 pb-16 hidden">
+  <div class="bg-slate-800/70 backdrop-blur rounded-[2rem] border-2 border-slate-700 shadow-2xl p-8 text-center">
+    <div class="text-5xl mb-3">👨‍👩‍👧‍👦</div>
+    <h2 class="text-2xl font-display font-bold text-white">Welcome to NoctuMath!</h2>
+    <p class="text-sm text-slate-400 mt-2 mb-6">Who's learning today? Add your student(s) — each gets their own stars, streaks and progress.</p>
+    <div class="flex gap-2 mb-3">
+      <input id="ob-name" placeholder="Student's name" class="flex-1 bg-slate-900 border-2 border-slate-600 rounded-xl px-4 py-3 text-sm font-bold text-white text-center focus:outline-none focus:border-amber-400" onkeydown="if(event.key==='Enter')obAdd()">
+      <button onclick="obAdd()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold px-4 rounded-xl transition-all text-sm">Add</button>
+    </div>
+    <div id="ob-list" class="flex flex-wrap justify-center gap-2 min-h-[2.5rem] mb-4"></div>
+    <label class="flex items-start gap-2 text-left text-[11px] text-slate-400 mb-4 cursor-pointer">
+      <input id="ob-agree" type="checkbox" onchange="obRender()" class="accent-amber-400 w-4 h-4 mt-0.5 shrink-0">
+      <span>I'm a parent or guardian and I agree to the <a onclick="showLegal('terms')" class="text-amber-300 underline">Terms of Service</a> and <a onclick="showLegal('privacy')" class="text-amber-300 underline">Privacy Policy</a>, including data storage for my student(s).</span>
+    </label>
+    <button id="ob-start" onclick="obFinish()" disabled class="w-full bg-gradient-to-r from-emerald-500 to-sky-500 text-white font-display font-bold text-lg py-4 rounded-2xl transition-all opacity-40 cursor-not-allowed">Let's go! 🚀</button>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dash" class="max-w-4xl mx-auto px-6 pb-16 hidden">
+  <div class="flex items-center justify-between mb-5">
+    <h2 class="text-2xl font-display font-bold text-white">📊 Parent Dashboard</h2>
+    <div class="flex items-center gap-2">
+      <select id="dash-kid" onchange="dashKid=this.value;renderDash()" class="bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2 text-sm font-bold text-white focus:outline-none focus:border-amber-400"></select>
+      <button onclick="renameKid()" title="Rename student" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 border border-slate-700 transition-all"><i data-lucide="pencil" class="w-4 h-4"></i></button>
+      <button onclick="exportReport()" title="Export report" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 border border-slate-700 transition-all"><i data-lucide="download" class="w-4 h-4"></i></button>
+      <span id="pro-badge" class="hidden text-[10px] font-bold px-3 py-1 rounded-full bg-amber-400 text-slate-900">⭐ PARENT PLAN</span>
+    </div>
+  </div>
+  <div id="dash-body"></div>
+</div>
+
+<!-- WORKSHEETS -->
+<div id="ws" class="max-w-3xl mx-auto px-6 pb-16 hidden">
+  <h2 class="text-2xl font-display font-bold text-white mb-1">🖨️ Worksheets</h2>
+  <p class="text-sm text-slate-400 mb-5">⭐ <b class="text-amber-300">Parent Plan feature</b> — generate printable practice sheets with answer keys for any grade, 1–100 problems.</p>
+  <div class="bg-slate-800/70 border-2 border-slate-700 rounded-3xl p-6 grid sm:grid-cols-4 gap-3 mb-5">
+    <select id="ws-op" class="bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm font-bold text-white"><option value="addition">➕ Adding</option><option value="subtraction">➖ Taking away</option><option value="multiplication">✖️ Times</option><option value="division">➗ Sharing</option><option value="mixed" selected>🎲 Mixed</option></select>
+    <select id="ws-grade" class="bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm font-bold text-white"><option value="k">K</option><option value="g1">1</option><option value="g2">2</option><option value="g3" selected>3</option><option value="g4">4</option><option value="g5">5</option><option value="g6">6</option><option value="g7">7</option><option value="g8">8</option></select>
+    <input id="ws-count" type="number" min="1" max="100" value="10" title="Problems (1-100)" class="bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm font-bold text-white focus:outline-none focus:border-amber-400">
+    <button onclick="genWs()" class="bg-brand-600 text-white font-display font-bold rounded-xl py-2.5 transition-all" style="background:var(--op,#7c3aed)">Generate</button>
+  </div>
+  <div id="ws-preview" class="hidden bg-white rounded-2xl p-8 text-slate-900">
+    <div class="flex items-center justify-between mb-5"><h3 id="ws-title" class="font-display font-bold text-xl"></h3><span class="text-xs font-bold text-slate-400">NoctuMath worksheet</span></div>
+    <div id="ws-list" class="grid grid-cols-2 gap-x-8 gap-y-5 text-lg font-semibold"></div>
+    <div class="text-center mt-7"><button onclick="printWs()" class="bg-slate-900 text-white font-display font-bold px-7 py-3 rounded-xl">🖨️ Print worksheet</button></div>
+  </div>
+</div>
+
+<!-- PAST PROBLEMS -->
+<div id="past" class="max-w-2xl mx-auto px-6 pb-16 hidden">
+  <h2 class="text-2xl font-display font-bold text-white mb-1">📚 Past problems</h2>
+  <p class="text-sm text-slate-400 mb-5">Tap any problem to go back and solve it again with full step-by-step help.</p>
+  <div id="past-list" class="space-y-2"></div>
+</div>
+
+<!-- FEEDBACK -->
+<div id="fbview" class="max-w-xl mx-auto px-6 pb-16 hidden">
+  <h2 class="text-2xl font-display font-bold text-white mb-1">💬 Parents' feedback</h2>
+  <p class="text-sm text-slate-400 mb-5">Requests, suggestions or a quick review — it all helps Hoot get better. This opens your mail app addressed to <b class="text-amber-300">support@noctumath.com</b> — just press send!</p>
+  <div class="bg-slate-800/70 border-2 border-slate-700 rounded-3xl p-6 space-y-4">
+    <div><label class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1.5">Your name</label><input id="fb-name" class="w-full bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400" placeholder="Parent name"></div>
+    <div><label class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1.5">How would you rate NoctuMath?</label>
+      <div class="flex gap-1.5" id="fb-stars">${""}</div></div>
+    <div><label class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-400 mb-1.5">Message</label><textarea id="fb-msg" rows="4" placeholder="What would you like to see? What worked for your child?" class="w-full bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400 resize-none"></textarea></div>
+    <button id="fb-send" onclick="submitFeedback()" class="w-full bg-gradient-to-r from-amber-400 to-orange-500 text-white font-display font-bold py-3.5 rounded-xl transition-all">Send feedback 🦉</button>
+  </div>
+</div>
+
+<!-- ACCOUNT -->
+<div id="account" class="max-w-2xl mx-auto px-6 pb-16 hidden">
+  <h2 class="text-2xl font-display font-bold text-white mb-1">⚙️ Account Settings</h2>
+  <p class="text-sm text-slate-400 mb-6">Your plan, billing and preferences.</p>
+  <div id="account-body"></div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="max-w-3xl mx-auto px-6 pb-16 hidden">
+  <div class="flex items-center justify-between mb-4">
+    <button onclick="backToSetup()" class="text-sm font-bold text-slate-400 hover:text-white flex items-center gap-1.5 transition-colors bg-slate-800/70 rounded-full px-4 py-2"><i data-lucide="arrow-left" class="w-4 h-4"></i>Change grade</button>
+    <div class="flex items-center gap-2 text-xs font-extrabold text-slate-400">
+      <span id="q-op-label" class="uppercase tracking-widest opc"></span>
+      <span id="q-grade-label" class="bg-slate-800/80 rounded-full px-3 py-1.5 border border-slate-700"></span>
+    </div>
+  </div>
+
+  <div id="quiz-card" class="bg-slate-800/80 backdrop-blur rounded-[2rem] border-2 shadow-2xl p-7 md:p-10 opb">
+    <div class="text-center mb-6">
+      <p id="q-text" class="text-5xl md:text-6xl font-bold tracking-tight font-display text-white"></p>
+    </div>
+    <div id="timer-wrap" class="hidden max-w-md mx-auto mt-5">
+      <div class="flex justify-between text-xs font-extrabold text-slate-400 mb-1.5"><span>⏱ <span id="timer-text">20</span>s</span><span id="quiz-progress">1 / 10</span></div>
+      <div class="h-2.5 bg-slate-700 rounded-full overflow-hidden"><div id="timer-bar" class="h-full bg-emerald-400 rounded-full" style="width:100%;transition:width 1s linear,background .3s"></div></div>
+    </div>
+    <div id="answer-row" class="flex gap-3 max-w-md mx-auto">
+      <input id="q-answer" type="number" inputmode="numeric" placeholder="?" onkeydown="if(event.key==='Enter')checkAnswer()" class="flex-1 bg-slate-900 border-4 border-slate-600 rounded-2xl px-5 py-4 text-3xl font-display font-bold text-center text-white focus:outline-none focus:border-amber-400">
+      <button onclick="checkAnswer()" class="bg-gradient-to-br from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white font-display font-bold text-xl px-8 rounded-2xl transition-all shadow-lg shadow-orange-900/40">Go!</button>
+    </div>
+    <div class="text-center mt-3" id="help-area">
+      <button onclick="showHint()" class="text-sm font-bold text-slate-400 hover:text-white transition-colors inline-flex items-center gap-1.5">🐾 Stuck? Get a hint about THIS problem</button>
+      <p id="q-hint" class="text-sm text-amber-300/90 mt-1.5 font-medium hidden"></p>
+      <div class="mt-3" id="tools-toggle">
+        <button onclick="toggleTools()" class="text-sm font-bold text-sky-300 hover:text-sky-200 transition-colors inline-flex items-center gap-1.5">🧰 Counting tools &amp; notes</button>
+        <div id="tools" class="hidden max-w-xl mx-auto mt-3 bg-slate-900/60 border border-slate-700 rounded-2xl p-4 grid sm:grid-cols-2 gap-4 text-left">
+          <div>
+            <p class="text-[11px] font-extrabold uppercase tracking-widest text-slate-400 mb-2">✏️ Tally marks <span id="tally-count" class="opc font-display">0</span></p>
+            <div id="tally-marks" class="flex flex-wrap items-end gap-y-2 min-h-[2rem] mb-2"></div>
+            <div class="flex gap-2">
+              <button onclick="addTally(1)" class="text-xs font-bold text-white px-2.5 py-1.5 rounded-lg" style="background:var(--op)">+1</button>
+              <button onclick="addTally(5)" class="text-xs font-bold text-white px-2.5 py-1.5 rounded-lg" style="background:var(--op)">+5</button>
+              <button onclick="addTally(10)" class="text-xs font-bold text-white px-2 py-1.5 rounded-lg" style="background:var(--op)">+10</button>
+              <button onclick="clearTally()" class="text-xs font-bold text-slate-400 hover:text-white px-2">Clear</button>
+            </div>
+          </div>
+          <div>
+            <p class="text-[11px] font-extrabold uppercase tracking-widest text-slate-400 mb-2">⭐ Counting stars <span id="star-count" class="opc font-display">0</span></p>
+            <div id="star-marks" class="flex flex-wrap gap-1 min-h-[2rem] mb-2 text-lg leading-6"></div>
+            <div class="flex gap-2">
+              <button onclick="addStar(1)" class="text-xs font-bold text-white px-2.5 py-1.5 rounded-lg" style="background:var(--op)">+1</button>
+              <button onclick="addStar(5)" class="text-xs font-bold text-white px-2.5 py-1.5 rounded-lg" style="background:var(--op)">+5</button>
+              <button onclick="addStar(10)" class="text-xs font-bold text-white px-2 py-1.5 rounded-lg" style="background:var(--op)">+10</button>
+              <button onclick="clearStars()" class="text-xs font-bold text-slate-400 hover:text-white px-2">Clear</button>
+            </div>
+          </div>
+          <div class="sm:col-span-2">
+            <p class="text-[11px] font-extrabold uppercase tracking-widest text-slate-400 mb-2">📝 My notes</p>
+            <textarea id="ms-notes" rows="2" placeholder="Write facts to remember, like 7 x 8 = 56..." class="w-full bg-slate-800/80 border border-slate-600 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-amber-400 resize-none"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="feedback" class="hidden mt-8">
+      <div class="text-center mb-5">
+        <div id="fb-face" class="text-6xl mb-2 inline-block pop">🦉</div>
+        <div id="fb-correct" class="hidden"><div class="inline-flex items-center gap-2 bg-emerald-500/15 border-[3px] border-emerald-500/50 text-emerald-300 font-display font-bold text-lg px-6 py-2.5 rounded-full pop" id="fb-cheer"></div></div>
+        <div id="fb-wrong" class="hidden">
+          <div class="inline-flex items-center gap-2 bg-orange-500/15 border-[3px] border-orange-500/50 text-orange-300 font-display font-bold text-lg px-6 py-2.5 rounded-full pop">💡 The answer is <span id="fb-answer" class="underline decoration-wavy decoration-2 underline-offset-4"></span>!</div>
+          <p class="text-sm text-slate-400 mt-3 font-medium">Hoot will show you exactly how — try each step yourself! ✨</p>
+        </div>
+      </div>
+
+      <div id="steps-panel" class="rounded-3xl border-[3px] opb p-5 md:p-7" style="background:var(--opL)">
+        <h3 class="font-display font-bold text-lg flex items-center gap-2 opc mb-4"><span class="text-xl">🖼️</span>First, picture it!</h3>
+        <div id="pic" class="mb-5 overflow-x-auto rounded-2xl bg-slate-900/60 border border-slate-700/60 p-4 text-center"></div>
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-display font-bold text-lg flex items-center gap-2 opc"><span class="text-xl">🔮</span>Now YOU solve it, step by step</h3>
+          <button id="btn-next-step" onclick="skipStep()" class="text-sm font-display font-bold text-white px-5 py-2.5 rounded-xl transition-all shadow-md" style="background:var(--op)">Skip ⏭</button>
+        </div>
+        <div id="visual" class="mb-5 overflow-x-auto"></div>
+        <div id="steps" class="space-y-2.5"></div>
+        <p id="steps-final" class="hidden mt-5 text-center font-display font-bold text-3xl opc"></p>
+
+        <div id="mem-tips" class="hidden mt-6 bg-slate-900/70 border-2 border-yellow-500/40 rounded-2xl p-5">
+          <h4 class="font-display font-bold text-yellow-300 flex items-center gap-2 mb-3">🧠 Remember THIS problem next time</h4>
+          <ul class="space-y-2 text-sm text-slate-300" id="mem-list"></ul>
+          <h4 class="font-display font-bold text-yellow-300/80 flex items-center gap-2 mb-2 mt-4 text-sm">🌟 Practice tip for your grade</h4>
+          <p class="text-sm text-slate-400" id="mem-grade"></p>
+        </div>
+      </div>
+
+      <div class="text-center mt-7">
+        <button onclick="nextQuestion()" class="bg-white hover:bg-slate-100 text-slate-900 font-display font-bold text-lg px-9 py-4 rounded-2xl transition-all inline-flex items-center gap-2 shadow-xl">Next one! <span class="text-xl">🎈</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="text-center text-xs font-bold text-slate-500 pb-8">Made with ❤️ for young mathematicians · NoctuMath · <a onclick="showLegal('privacy')" class="hover:text-slate-300 cursor-pointer">Privacy</a> · <a onclick="showLegal('terms')" class="hover:text-slate-300 cursor-pointer">Terms</a></footer>
+</div>
+
+<script>
+let grade="k",op="addition",cur=null,qCount=0,hintIdx=0;
+let mode="practice",quiz=null,timerIv=null,reviewMode=false,reviewList=[],WS=null,singleMode=false,singleCur=null,fbRating=0;
+function isPro(){return localStorage.getItem("ms_pro")==="1";}
+function toastFreeLimit(){const el=document.getElementById("grade-note");if(el){el.textContent="Free plan: quizzes up to 10 questions — ⭐ Parent Plan unlocks up to 50!";el.classList.remove("hidden");}}
+function obOpen(){obKids=kids.map(k=>k.name);obRender();showView("onboard");}
+let obKids=[];
+function obRender(){
+  document.getElementById("ob-list").innerHTML=obKids.map((n,i)=>`<span class="flex items-center gap-1.5 bg-amber-400/15 border-2 border-amber-400/60 text-amber-300 text-sm font-bold px-3.5 py-2 rounded-full">${KID_EMOJIS[i%KID_EMOJIS.length]} ${n} <button onclick="obKids.splice(${i},1);obRender()" class="opacity-60 hover:opacity-100">✕</button></span>`).join("");
+  const b=document.getElementById("ob-start");
+  const agree=document.getElementById("ob-agree");
+  const ready=obKids.length&&(agree?agree.checked:true);
+  b.disabled=!ready;
+  b.className="w-full bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600 text-white font-display font-bold text-lg py-4 rounded-2xl transition-all shadow-lg "+(ready?"":"opacity-40 cursor-not-allowed");
+}
+function obAdd(){
+  const n=document.getElementById("ob-name").value.trim();
+  if(!n)return;
+  obKids.push(n);document.getElementById("ob-name").value="";document.getElementById("ob-name").focus();obRender();
+}
+function obFinish(){
+  if(!obKids.length)return;
+  const agree=document.getElementById("ob-agree");
+  if(agree&&!agree.checked){alert("Please agree to the Terms & Privacy Policy to continue.");return;}
+  kids=obKids.map((n,i)=>({id:"k"+Date.now()+"_"+i,name:n}));
+  msCur=kids[0].id;saveKids();
+  const d=pd();score=0;streak=0;studentName=kids[0].name;
+  document.getElementById("score").textContent=0;document.getElementById("streak").textContent=0;
+  const si=document.getElementById("student-name");if(si)si.value=studentName;setName();
+  renderKidChips();showSetupRec();
+  showView("setup");
+}
+function enterApp(){
+  document.getElementById("landing").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+  try{renderAds();}catch(e){}
+  loadKids();
+  if(!kids.length){obKids=[];obRender();showView("onboard");}
+  else showView("setup");
+  window.scrollTo(0,0);
+}
+function proGate(v){if(isPro()){showView(v);}else{openPaywall();}}
+const LEGAL_DOCS={
+ privacy:{title:"Privacy Policy — NoctuMath",body:[
+  ["Last updated: October 2026","NoctuMath (“we”, “us”) is a math practice app for children in grades K–8. This policy explains what we collect, why, and the rights of parents and guardians."],
+  ["1. The short version","Student answers, stars, streaks and notes are stored <b>locally on your device</b> (and in the future, under your parent account in the cloud). We do not sell data, we do not show behavioral ads, and we never track children across other websites."],
+  ["2. What we collect","• Student profiles (first name or nickname chosen by the parent)<br/>• Practice activity: which problems were solved, right or wrong, and when<br/>• Parent contact email (if provided, for receipts and progress reports)<br/>• Payment details — handled entirely by our payment processor (Stripe); we never see or store card numbers."],
+  ["3. Children’s privacy (COPPA)","NoctuMath is designed for children under 13 and complies with the Children’s Online Privacy Protection Act. Children cannot create accounts or provide personal information — only a parent or guardian can. We collect only the minimum needed to provide the service, and parents may review, correct or delete their child’s data at any time by contacting us."],
+  ["4. How we use information","To run the app (saving progress, showing the parent dashboard), to send transactional emails parents request, and to improve the product. We never use student data for advertising or profiling."],
+  ["5. Cookies & local storage","We use strictly-necessary storage to keep the site working (profiles, preferences, consent choice). We do not use third-party tracking, analytics advertising cookies, or fingerprinting. You can decline non-essential storage via the cookie banner."],
+  ["6. Data retention & deletion","Data is kept while the parent keeps the profile. Parents can delete a student profile at any time from the app, or email us to delete everything: <b>support@noctumath.com</b>. Deletion is completed within 30 days."],
+  ["7. Your rights","Depending on your region (GDPR, CCPA/CPRA), parents may request access, correction, portability or deletion of their child’s data at any time by emailing <b>support@noctumath.com</b>."],
+  ["8. Security & changes","Data is encrypted in transit. We may update this policy as features launch (e.g., cloud accounts) — material changes will be announced in-app and by email to registered parents."]]},
+ terms:{title:"Terms of Service — NoctuMath",body:[
+  ["Last updated: October 2026","By using NoctuMath you agree to these terms. If you use it on behalf of your children, you accept these terms for your whole family."],
+  ["1. The service","NoctuMath provides step-by-step math practice (addition, subtraction, multiplication, division) for grades K–8, including quizzes, progress reports and printable worksheets. Features may evolve over time."],
+  ["2. Free plan & Parent Plan","The Free plan includes unlimited practice and quizzes up to 10 questions, without saved progress. The <b>Parent Plan</b> ($4.99/month or $39/year) adds saved progress, the Parent Dashboard, Worksheets, Past Problems and quizzes up to 50 questions. Prices may change with 30 days' notice."],
+  ["3. Billing & cancellation","Subscriptions bill through our payment processor until canceled. Parents can cancel anytime from <b>Account Settings</b> — access continues until the end of the paid period, and no partial refunds are given except where required by law."],
+  ["4. Acceptable use","NoctuMath is for personal, family and classroom use. Don’t scrape, resell, or attempt to disrupt the service; don't upload content you have no rights to."],
+  ["5. Children & accounts","Children use NoctuMath under a parent-managed profile. Parents are responsible for supervising use and for the accuracy of the information they provide."],
+  ["6. Content & education","NoctuMath is a practice aid, not a certified curriculum or tutoring service. While our step-by-step methods follow standard elementary pedagogy, results depend on each child’s practice."],
+  ["7. Intellectual property","The NoctuMath name, owl logo, design and content belong to us. You receive a personal, non-transferable license to use the service."],
+  ["8. Liability & changes","The service is provided \"as is\" to the maximum extent permitted by law. We may update these terms; continued use after notice constitutes acceptance. Questions: <b>support@noctumath.com</b>."]]}};
+function showLegal(doc){
+  const d=LEGAL_DOCS[doc]||LEGAL_DOCS.privacy;
+  document.getElementById("legal-title").textContent=d.title;
+  document.getElementById("legal-body").innerHTML=d.body.map(s=>
+    `<div class="bg-slate-800/70 border border-slate-700 rounded-2xl p-5"><h3 class="text-white font-bold text-sm mb-1.5">${s[0]}</h3><p>${s[1]}</p></div>`).join("");
+  const el=document.getElementById("legal");el.classList.remove("hidden");el.scrollTop=0;
+}
+function hideLegal(){document.getElementById("legal").classList.add("hidden");}
+function acceptCookies(){try{localStorage.setItem("nm_cookies","accepted");}catch(e){}document.getElementById("cookie-banner").remove();}
+function declineCookies(){try{localStorage.setItem("nm_cookies","declined");}catch(e){}document.getElementById("cookie-banner").remove();}
+function showLanding(){document.getElementById("app").classList.add("hidden");document.getElementById("landing").classList.remove("hidden");window.scrollTo(0,0);}
+function showView(v){
+  clearInterval(timerIv);
+  ["setup","quiz","dash","ws","past","fbview","onboard","account"].forEach(x=>document.getElementById(x).classList.add("hidden"));
+  document.getElementById(v).classList.remove("hidden");
+  if(v==="account")renderAccount();
+  if(v==="ws"&&!isPro()){document.getElementById(v).classList.add("hidden");openPaywall();return;}
+  if(v==="dash")renderDash();
+  if(v==="past")renderPast();
+  if(v==="fbview")renderFbStars();
+  if(v==="setup"){renderReviewSlot();
+    const gn=document.getElementById("grade-note");
+    if(!isPro()){gn.innerHTML="🆓 Free mode: practice all you want — <b class='text-amber-300'>⭐ Parent Plan</b> saves progress, reports & unlocks Dashboard, Worksheets and Past problems.";gn.classList.remove("hidden");}}
+  window.scrollTo(0,0);
+}
+/* ---- data layer ---- */
+function logAnswer(op2,ok){
+  if(!isPro())return;
+  try{const d=pd();
+    d.log.push({d:new Date().toISOString().slice(0,10),op:op2,ok:ok,k:op2+":"+cur.a+":"+cur.b});
+    if(d.log.length>2000)d.log=d.log.slice(-2000);
+    if(!ok){const k=op2+":"+cur.a+":"+cur.b;d.misses[k]=(d.misses[k]||0)+1;}
+    savePd(d);}catch(e){}
+}
+function pushQuizRecord(pct){
+  if(!isPro())return;
+  try{const d=pd();d.quizzes.unshift({d:new Date().toLocaleDateString(),op:quiz.op,pct:pct,correct:quiz.correct,total:quiz.total});d.quizzes=d.quizzes.slice(0,30);savePd(d);}catch(e){}
+}
+/* ---- dashboard ---- */
+function getMisses(){return pd().misses||{};}
+let dashKid=null;
+function renderDash(){
+  const body=document.getElementById("dash-body");
+  document.getElementById("pro-badge").classList.toggle("hidden",!isPro());
+  if(!dashKid||!kids.find(k=>k.id===dashKid))dashKid=msCur;
+  const sel=document.getElementById("dash-kid");
+  sel.innerHTML=kids.map(k=>`<option value="${k.id}" ${k.id===dashKid?"selected":""}>${k.name}</option>`).join("");
+  const dk=kids.find(k=>k.id===dashKid)||kids[0]||{name:"Student"};
+  const _pd=pd(dashKid);const log=_pd.log||[];const quizzes=_pd.quizzes||[];
+  const solved=log.length,correct=log.filter(x=>x.ok).length;
+  const acc=solved?Math.round(correct/solved*100):0;
+  const best=quizzes.length?Math.max(...quizzes.map(q=>q.pct)):0;
+  const perOp={};["addition","subtraction","multiplication","division"].forEach(o=>{const l=log.filter(x=>x.op===o);perOp[o]={n:l.length,a:l.length?Math.round(l.filter(x=>x.ok).length/l.length*100):0};});
+  const stat=(l,v,c)=>`<div class="bg-slate-900/70 border border-slate-700 rounded-2xl p-5 text-center"><p class="text-3xl font-display font-bold ${c||"text-white"}">${v}</p><p class="text-[10px] font-extrabold uppercase tracking-widest text-slate-500 mt-1">${l}</p></div>`;
+  let h=`<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">${stat("Problems solved",solved)}${stat("Accuracy",acc+"%",acc>=80?"text-emerald-400":acc>=50?"text-amber-300":"text-rose-400")}${stat("Best quiz",best+"%")}${stat("🔥 Streak",_pd.streak||0)}</div>`;
+  h+=`<div class="bg-slate-800/60 border border-slate-700 rounded-3xl p-6 mb-6"><h3 class="font-display font-bold text-white mb-1">Accuracy by operation</h3><p class="text-[11px] text-slate-500 mb-4 font-semibold">ⓘ Percent answered correctly for each operation — a low bar here is exactly what to practice together.</p><div class="space-y-3">`;
+  [["addition","➕ Adding"],["subtraction","➖ Taking away"],["multiplication","✖️ Times"],["division","➗ Sharing"]].forEach(([o,l])=>{
+    const p=perOp[o];const col={addition:"#34d399",subtraction:"#fb923c",multiplication:"#a78bfa",division:"#38bdf8"}[o];
+    h+=`<div><div class="flex justify-between text-xs font-bold text-slate-400 mb-1"><span>${l} <span class="text-slate-600">(${p.n})</span></span><span>${p.a}%</span></div><div class="h-3 bg-slate-900 rounded-full overflow-hidden"><div class="h-full rounded-full" style="width:${p.a}%;background:${col}"></div></div></div>`;});
+  h+=`</div></div>`;
+  h+=`<p class="text-[11px] text-slate-500 -mt-3 mb-6 font-semibold">ⓘ <b>Problems solved</b> = every question answered in Practice &amp; Quiz · <b>Accuracy</b> = share answered correctly · <b>Best quiz</b> = highest quiz score ever · <b>🔥 Streak</b> = current run of correct answers in a row.</p>`;
+  /* last-7-days activity */
+  const days=[...Array(7)].map((_,i)=>{const dt=new Date();dt.setDate(dt.getDate()-(6-i));return dt.toISOString().slice(0,10);});
+  const counts=days.map(d=>log.filter(x=>x.d===d).length);
+  const maxC=Math.max(1,...counts);
+  const dayLbl=["S","M","T","W","T","F","S"];
+  h+=`<div class="bg-slate-800/60 border border-slate-700 rounded-3xl p-6 mb-6"><h3 class="font-display font-bold text-white mb-1">📅 This week</h3><p class="text-[11px] text-slate-500 mb-4 font-semibold">ⓘ How many problems were answered each day, last 7 days — short daily sessions beat weekend cramming.</p>
+    <div class="flex items-end justify-between gap-2 h-28">${counts.map((c,i)=>`<div class="flex-1 flex flex-col items-center gap-1.5"><span class="text-[10px] font-bold text-slate-500">${c||""}</span><div class="w-full rounded-t-lg bg-gradient-to-t from-emerald-500 to-teal-400" style="height:${Math.max(4,c/maxC*80)}px;opacity:${c?1:.15}"></div><span class="text-[9px] font-bold text-slate-600">${dayLbl[new Date(days[i]).getDay()]}</span></div>`).join("")}</div></div>`;
+  /* parent coaching */
+  h+=`<div class="bg-slate-800/60 border border-slate-700 rounded-3xl p-6 mb-6"><h3 class="font-display font-bold text-white mb-3">🤝 How to help ${dk.name} get better at math</h3>
+    <ul class="space-y-2.5 text-sm text-slate-300">
+      <li class="flex gap-2"><span class="text-emerald-400 shrink-0">1.</span>Short &amp; daily beats long &amp; rare — 10 minutes a day, five days a week.</li>
+      <li class="flex gap-2"><span class="text-emerald-400 shrink-0">2.</span>Ask "how did you get that?" — explaining steps cements them faster than drilling.</li>
+      <li class="flex gap-2"><span class="text-emerald-400 shrink-0">3.</span>Celebrate effort, not just right answers — mistakes logged here are exactly what to practice.</li>
+      <li class="flex gap-2"><span class="text-emerald-400 shrink-0">4.</span>Use the 🎯 Review card together once a week — turn tricky facts into a game.</li>
+    </ul></div>`;
+  const lock=`<div class="relative -mt-4 mb-6"><div class="blur-[3px] opacity-40 pointer-events-none select-none">${histHTML(quizzes)}</div>
+    <div class="absolute inset-0 flex flex-col items-center justify-center gap-2"><span class="text-3xl">🔒</span><p class="text-sm font-bold text-white">Quiz history, missed-facts review &amp; more</p>
+    <button onclick="openPaywall()" class="bg-amber-400 text-slate-900 font-display font-bold px-5 py-2.5 rounded-xl text-sm">Unlock Parent Plan</button></div></div>`;
+  h+=isPro()?histHTML(quizzes,true):lock;
+  body.innerHTML=h;
+}
+function histHTML(quizzes,full){
+  let rows=quizzes.slice(0,full?10:4).map(q=>`<tr class="border-b border-slate-800"><td class="py-2 pr-3 text-slate-400 text-xs">${q.d}</td><td class="py-2 pr-3 text-slate-300 text-xs capitalize">${q.op}</td><td class="py-2 pr-3 text-white font-bold text-xs">${q.correct}/${q.total}</td><td class="py-2 text-xs font-bold ${q.pct>=70?"text-emerald-400":"text-rose-400"}">${q.pct}%</td></tr>`).join("");
+  const misses=getMisses();const top=Object.entries(misses).sort((a,b)=>b[1]-a[1]).slice(0,full?8:3);
+  let mh="";
+  if(top.length){mh=`<div class="bg-slate-800/60 border border-slate-700 rounded-3xl p-6"><h3 class="font-display font-bold text-white mb-3">🎯 Tricky facts to review</h3><div class="flex flex-wrap gap-2">${top.map(([k,n])=>{const[op2,a,b]=k.split(":");return `<span class="bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-bold px-3 py-1.5 rounded-full">${a} ${OPSYM[op2]} ${b} · missed ${n}×</span>`;}).join("")}</div>
+  <button onclick="startReview()" class="mt-4 bg-rose-500/80 hover:bg-rose-500 text-white font-display font-bold px-5 py-2.5 rounded-xl text-sm transition-all">Practice these now</button></div>`;}
+  return `<div class="bg-slate-800/60 border border-slate-700 rounded-3xl p-6 mb-6"><h3 class="font-display font-bold text-white mb-3">Recent quizzes</h3>
+  <table class="w-full text-left">${rows||'<tr><td class="text-xs text-slate-500 py-2">No quizzes yet — take one! ⚡</td></tr>'}</table></div>${mh}`;
+}
+/* ---- review mode ---- */
+function renderReviewSlot(){
+  const misses=getMisses();const top=Object.entries(misses).sort((a,b)=>b[1]-a[1]);
+  const slot=document.getElementById("review-slot");
+  if(!top.length){slot.innerHTML="";return;}
+  const limit=isPro()?10:3;
+  slot.innerHTML=`<button onclick="startReview()" class="w-full mb-5 bg-rose-500/15 border-2 border-rose-500/50 hover:bg-rose-500/25 rounded-2xl p-4 flex items-center justify-between transition-all">
+    <span class="font-display font-bold text-rose-300">🎯 Review my tricky facts <span class="text-xs opacity-70">(${top.length} found${isPro()?"":" · top 3 free"})</span></span>
+    <span class="text-rose-300 font-bold text-sm">Practice →</span></button>`;
+}
+function renderPast(){
+  const log=pd().log||[];const seen={};const items=[];
+  for(let i=log.length-1;i>=0&&items.length<24;i--){
+    const e=log[i];if(!e.k){/* older entries lack k — skip */continue;}
+  }
+  // rebuild from misses + recent log with keys
+  const list=document.getElementById("past-list");
+  const misses=getMisses();
+  let h=Object.entries(misses).sort((a,b)=>b[1]-a[1]).map(([k,n])=>{
+    const[op2,a,b]=k.split(":");const a2=+a,b2=+b;
+    const ans=op2==="addition"?a2+b2:op2==="subtraction"?a2-b2:op2==="multiplication"?a2*b2:a2/b2;
+    return {op:op2,a:a2,b:b2,ans:ans,misses:n};
+  });
+  if(!h.length){list.innerHTML='<p class="text-sm text-slate-500 bg-slate-800/60 border border-slate-700 rounded-2xl p-6 text-center">No problems yet — go practice and they will appear here! 🌱</p>';return;}
+  list.innerHTML=h.map((it,i)=>`<button onclick='startSingle(${JSON.stringify(it)})' class="w-full flex items-center justify-between bg-slate-800/60 hover:bg-slate-700/60 border border-slate-700 rounded-2xl px-5 py-3.5 transition-all">
+    <span class="font-display font-bold text-lg text-white">${it.a} ${OPSYM[it.op]} ${it.b} = ?</span>
+    <span class="text-xs font-bold ${it.misses?"text-rose-400":"text-slate-500"}">${it.misses?"missed "+it.misses+"× 🔁":"solved ✓"}</span></button>`).join("");
+}
+function startSingle(item){
+  singleCur={op:item.op,a:item.a,b:item.b,ans:item.ans};singleMode=true;reviewMode=false;
+  const r=document.getElementById("results");if(r)r.remove();
+  mode="practice";showView("quiz");
+}
+function renderFbStars(){
+  const w=document.getElementById("fb-stars");
+  w.innerHTML=[1,2,3,4,5].map(i=>`<button onclick="setFb(${i})" class="text-2xl transition-transform hover:scale-125 ${i<=fbRating?"":"opacity-30"}">⭐</button>`).join("");
+}
+function setFb(i){fbRating=i;renderFbStars();}
+function submitFeedback(){
+  const msg=document.getElementById("fb-msg").value.trim();
+  if(!msg){document.getElementById("fb-msg").classList.add("shake");setTimeout(()=>document.getElementById("fb-msg").classList.remove("shake"),450);return;}
+  const name=document.getElementById("fb-name").value.trim()||"Parent";
+  const subject=encodeURIComponent("NoctuMath feedback ("+fbRating+"/5 stars) from "+name);
+  const body=encodeURIComponent("Hi NoctuMath team!\n\n"+msg+"\n\n— "+name+"\nRating: "+fbRating+"/5 stars\n\n(Sent from the NoctuMath feedback page)");
+  window.location.href="mailto:support@noctumath.com?subject="+subject+"&body="+body;
+  const th=document.getElementById("fb-thanks");th.classList.remove("hidden");th.classList.add("flex");
+}
+function startReview(){
+  const misses=getMisses();let top=Object.entries(misses).sort((a,b)=>b[1]-a[1]);
+  top=isPro()?top.slice(0,10):top.slice(0,3);
+  reviewList=top.map(([k])=>{const[op2,a,b]=k.split(":");a2=+a;b2=+b;return{op:op2,a:a2,b:b2,ans:op2==="addition"?a2+b2:op2==="subtraction"?a2-b2:op2==="multiplication"?a2*b2:a2/b2};});
+  reviewMode=true;mode="quiz";
+  quiz={total:reviewList.length,tmode:"none",tvalue:0,correct:0,times:[],answered:false,totalLeft:0,totalStarted:false,finished:false,op:"mixed"};
+  qCount=0;const r=document.getElementById("results");if(r)r.remove();
+  showView("quiz");nextQuestion();
+}
+/* ---- worksheets ---- */
+function genWs(){
+  const o=document.getElementById("ws-op").value,g=document.getElementById("ws-grade").value,n=Math.min(100,Math.max(1,+document.getElementById("ws-count").value||10));document.getElementById("ws-count").value=n;
+  const keep=grade;grade=g;const items=[];
+  for(let i=0;i<n;i++){let oo=o==="mixed"?["addition","subtraction","multiplication","division"][rnd(0,3)]:o;
+    if(g==="k2"&&(oo==="multiplication"||oo==="division"))oo="addition";
+    let c;{const saved=op;op=oo;c=gen();op=saved;}
+    items.push({text:c.a+" "+OPSYM[c.op]+" "+c.b+" =",ans:c.ans});}
+  grade=keep;WS={title:(o==="mixed"?"Mixed":OPNAME[o])+" · Grade "+GRADES[g].label,items};
+  document.getElementById("ws-preview").classList.remove("hidden");
+  document.getElementById("ws-title").textContent=WS.title;
+  document.getElementById("ws-list").innerHTML=items.map((it,i)=>`<div class="flex gap-3"><span class="text-slate-400 font-bold w-6">${i+1}.</span><span>${it.text}</span></div>`).join("");
+  document.getElementById("ws-preview").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function printWs(){
+  if(!isPro()){openPaywall();return;}
+  const w=window.open("","_blank");
+  w.document.write(`<!DOCTYPE html><html><head><title>NoctuMath Worksheet</title><style>body{font-family:Arial;margin:40px}h1{font-size:22px}.g{display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;margin-top:24px}.p{font-size:17px;font-weight:600}.key{page-break-before:always;margin-top:40px}.key div{font-size:14px;margin:4px 0}</style></head><body>
+  <h1>🦉 NoctuMath — ${WS.title}</h1><p style="color:#666">Name: ______________ &nbsp; Date: ____________</p>
+  <div class="g">${WS.items.map((it,i)=>`<div class="p">${i+1}. ${it.text} ______</div>`).join("")}</div>
+  <div class="key"><h1>Answer key (parents only 🤫)</h1>${WS.items.map((it,i)=>`<div>${i+1}. ${it.ans}</div>`).join("")}</div></body></html>`);
+  w.document.close();w.focus();setTimeout(()=>w.print(),400);
+}
+/* ---- paywall ---- */
+let plan="m";
+function setPlan(p){plan=p;
+  document.getElementById("plan-m").className="py-2.5 rounded-lg text-sm font-bold transition-all "+(p==="m"?"bg-amber-400 text-slate-900":"text-slate-400");
+  document.getElementById("plan-y").className="py-2.5 rounded-lg text-sm font-bold transition-all "+(p==="y"?"bg-amber-400 text-slate-900":"text-slate-400");
+  document.getElementById("pw2-btn").textContent=p==="m"?"Pay $4.99/mo":"Pay $39/yr — save 2 months";}
+function openPaywall(){const m=document.getElementById("paywall2");m.classList.remove("hidden");m.classList.add("flex");document.getElementById("pw2-pay").classList.remove("hidden");document.getElementById("pw2-done").classList.add("hidden");if(window.lucide)lucide.createIcons();}
+function closePaywall(){const m=document.getElementById("paywall2");m.classList.add("hidden");m.classList.remove("flex");}
+function fakePay2(){const b=document.getElementById("pw2-btn");b.textContent="Processing…";b.disabled=true;
+  setTimeout(()=>{try{localStorage.setItem("ms_pro","1");localStorage.setItem("ms_pro_plan",plan);}catch(e){}document.getElementById("pw2-pay").classList.add("hidden");document.getElementById("pw2-done").classList.remove("hidden");if(window.lucide)lucide.createIcons();},1200);}
+const KID_EMOJIS=["🦉","🐱","🦊","🐼","🐸","🦄"];
+let kids=[],msCur=null;
+function loadKids(){try{kids=JSON.parse(localStorage.getItem("ms_kids")||"[]");}catch(e){kids=[];}
+  msCur=null;try{msCur=localStorage.getItem("ms_current");}catch(e){}
+  if(!kids.length){msCur=null;return;}
+  if(!kids.find(k=>k.id===msCur))msCur=kids[0].id;
+  saveKids();}
+function saveKids(){try{localStorage.setItem("ms_kids",JSON.stringify(kids));localStorage.setItem("ms_current",msCur);}catch(e){}}
+function pd(id){id=id||msCur;try{return JSON.parse(localStorage.getItem("ms_pd_"+id)||"null")||{score:0,streak:0,notes:"",log:[],misses:{},quizzes:[],best:null};}catch(e){return{score:0,streak:0,notes:"",log:[],misses:{},quizzes:[],best:null};}}
+function savePd(d){if(!isPro())return;try{localStorage.setItem("ms_pd_"+msCur,JSON.stringify(d));}catch(e){}}
+function curKid(){return kids.find(k=>k.id===msCur)||kids[0]||{name:""};}
+let studentName="Student";
+let score=0,streak=0;
+const OPSYM={addition:"+",subtraction:"−",multiplication:"×",division:"÷"};
+const OPNAME={addition:"Adding",subtraction:"Taking away",multiplication:"Times",division:"Sharing"};
+const OPCLS={addition:"op-add",subtraction:"op-sub",multiplication:"op-mul",division:"op-div"};
+const GRADES={
+ k:{label:"K",ops:["addition","subtraction"],note:"Counting, adding and taking away with numbers up to 10.",
+  tip:"Use your fingers or draw dots — seeing it is learning it! 👆"},
+ g1:{label:"1",ops:["addition","subtraction"],note:"Adding and taking away with numbers up to 20.",
+  tip:"Practice one fact 3 times out loud — tomorrow it will be automatic! 🔁"},
+ g2:{label:"2",ops:["addition","subtraction"],note:"Numbers up to 100, with carrying and borrowing.",
+  tip:"Break numbers apart: 27+15 = 27+10+5. Tens first, then ones!"},
+ g3:{label:"3",ops:["addition","subtraction","multiplication","division"],note:"Times tables begin — the building blocks of everything!",
+  tip:"Sing the times tables! Music sticks better than staring. 🎵"},
+ g4:{label:"4",ops:["addition","subtraction","multiplication","division"],note:"Tables to 10×10 and bigger adding & taking away.",
+  tip:"Know your doubles (14−7=7) — they unlock subtraction instantly."},
+ g5:{label:"5",ops:["addition","subtraction","multiplication","division"],note:"3-digit add/subtract, and 2-digit times 1-digit.",
+  tip:"Say each step out loud like you're teaching a friend! 🗣️"},
+ g6:{label:"6",ops:["addition","subtraction","multiplication","division"],note:"2×2 multiplication and real long division.",
+  tip:"Learn fact families: 6×7=42 gives you 42÷6 AND 42÷7. 👨‍👧‍👦"},
+ g7:{label:"7",ops:["addition","subtraction","multiplication","division"],note:"Big numbers across all four operations.",
+  tip:"Time yourself! Aim under 40 seconds per problem, then 25. ⏱️"},
+ g8:{label:"8",ops:["addition","subtraction","multiplication","division","mixed"],note:"The hardest numbers — plus Mixed mode to tie it all together.",
+  tip:"Speed grows from confidence — master accuracy first, then the clock. 🏁"}};
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const place=["","ones","tens","hundreds","thousands"];
+const CHEER=["You got it, __NAME__! 🌟","Brilliant brain, __NAME__! 🧠✨","Hoot hoot! Perfect, __NAME__! 🦉","__NAME__, you math wizard! 🧙","Crushed it, __NAME__! 💪","Your brain leveled up, __NAME__! 🎮"];
+
+document.querySelectorAll(".g-btn").forEach(b=>b.onclick=()=>{grade=b.dataset.g;
+  document.querySelectorAll(".g-btn").forEach(x=>x.className="g-btn rounded-2xl border-[3px] py-3.5 font-display font-semibold transition-all border-slate-600 text-slate-400 hover:border-slate-500");
+  b.className="g-btn rounded-2xl border-[3px] py-3.5 font-display font-semibold transition-all border-amber-400 bg-amber-400/10 text-amber-300";
+  const g=GRADES[grade];
+  document.querySelectorAll(".op-btn").forEach(x=>{
+    const ok=g.ops.includes(x.dataset.op);
+    x.disabled=!ok;
+    if(!ok)x.classList.add("opacity-40","cursor-not-allowed");
+    else{x.classList.remove("opacity-40","cursor-not-allowed");
+      x.className="op-btn rounded-2xl border-[3px] py-4 font-display font-semibold text-base transition-all border-slate-600 text-slate-400 hover:border-slate-500"+(x.dataset.op==="mixed"?" col-span-2 sm:col-span-1":"");
+      if(x.dataset.op==="mixed")x.classList.add("col-span-2","sm:col-span-1");}
+  });
+  if(!g.ops.includes(op)){op=g.ops[0];}
+  document.querySelectorAll(".op-btn").forEach(x=>{if(x.dataset.op===op&&g.ops.includes(op)){x.className="op-btn rounded-2xl border-[3px] py-4 font-display font-semibold text-base transition-all text-white opb opL"+(x.dataset.op==="mixed"?" col-span-2 sm:col-span-1":"");}});
+  const note=document.getElementById("grade-note");note.textContent="Grades "+g.label+": "+g.note;note.classList.remove("hidden");showSetupRec();});
+document.querySelectorAll(".op-btn").forEach(b=>b.onclick=()=>{if(b.disabled)return;op=b.dataset.op;
+  document.querySelectorAll(".op-btn").forEach(x=>{if(x.disabled)return;x.className="op-btn rounded-2xl border-[3px] py-4 font-display font-semibold text-base transition-all border-slate-600 text-slate-400 hover:border-slate-500"+(x.dataset.op==="mixed"?" col-span-2 sm:col-span-1":"");});
+  b.className="op-btn rounded-2xl border-[3px] py-4 font-display font-semibold text-base transition-all text-white opb opL"+(b.dataset.op==="mixed"?" col-span-2 sm:col-span-1":"");});
+
+/* ---- student tools ---- */
+function toggleTools(){document.getElementById("tools").classList.toggle("hidden");}
+let tally=0;
+function addTally(n){tally=Math.min(200,tally+(n||1));renderTally();}
+function clearTally(){tally=0;renderTally();}
+function renderTally(){document.getElementById("tally-count").textContent=tally;let h="";
+  for(let g=0;g<tally;g+=5){
+    let bars="";const end=Math.min(g+5,tally);
+    for(let i=g;i<end;i++)bars+=`<span class="tally-bar${(i+1)%5===0?" slash":""}"></span>`;
+    h+=`<span class="tally-group">${bars}</span>`;
+  }
+  document.getElementById("tally-marks").innerHTML=h;}
+let stars=0;
+function addStar(n){stars=Math.min(200,stars+(n||1));renderStars();}
+function clearStars(){stars=0;renderStars();}
+function renderStars(){document.getElementById("star-count").textContent=stars;let h="";for(let i=0;i<stars;i++)h+="<span>⭐</span>";document.getElementById("star-marks").innerHTML=h;}
+function saveNotes(){const d=pd();d.notes=document.getElementById("ms-notes").value;savePd(d);}
+function renderKidChips(){
+  const w=document.getElementById("kid-chips");if(!w)return;
+  w.innerHTML=kids.map((k,i)=>`<span class="inline-flex items-center gap-1">
+    <button onclick="switchProfile('${k.id}')" class="flex items-center gap-1.5 px-3.5 py-2 rounded-full border-2 text-xs font-bold transition-all ${k.id===msCur?"bg-amber-400/15 border-amber-400 text-amber-300":"border-slate-600 text-slate-400 hover:border-slate-500"}">${KID_EMOJIS[i%KID_EMOJIS.length]} ${k.name}${k.id===msCur?" ✓":""}</button>
+    <button onclick="deleteKid('${k.id}')" title="Delete profile & data" class="text-slate-600 hover:text-rose-400 text-xs font-bold px-0.5 transition-colors">✕</button></span>`).join("");
+}
+function addKid(){
+  const name=(prompt("Student's name?","Student")||"").trim();
+  if(!name)return;
+  const id="k"+Date.now();
+  kids.push({id:id,name:name});msCur=id;saveKids();
+  switchProfile(id);
+}
+function deleteKid(id){
+  const k=kids.find(x=>x.id===id);if(!k)return;
+  if(!confirm(`Delete ${k.name}'s profile and ALL their saved progress?\n\nThis cannot be undone. You can also email support@noctumath.com to delete everything.`))return;
+  try{localStorage.removeItem("ms_pd_"+id);}catch(e){}
+  kids=kids.filter(x=>x.id!==id);
+  if(!kids.length){msCur=null;saveKids();showView("onboard");obKids=[];obRender();return;}
+  if(msCur===id)msCur=kids[0].id;
+  saveKids();switchProfile(msCur);
+}
+function switchProfile(id){
+  msCur=id;saveKids();
+  const d=pd();score=d.score;streak=d.streak;studentName=curKid().name;
+  document.getElementById("score").textContent=score;
+  document.getElementById("streak").textContent=streak;
+  const si2=document.getElementById("student-name");if(si2)si2.value=studentName;setName();
+  const notes=document.getElementById("ms-notes");if(notes)notes.value=d.notes||"";
+  renderKidChips();showSetupRec();renderReviewSlot();
+}
+function setName(){const si=document.getElementById("student-name");if(si)studentName=si.value.trim()||"Student";try{const k=curKid();if(k){k.name=studentName;saveKids();}}catch(e){}
+  const g=document.getElementById("greet");if(g)g.textContent="Hi "+studentName+"! Hoo-ver knew math could be this fun!";}
+
+document.querySelectorAll(".m-btn").forEach(b=>b.onclick=()=>{mode=b.dataset.m;
+  document.querySelectorAll(".m-btn").forEach(x=>x.className="m-btn rounded-2xl border-[3px] py-3.5 font-display font-semibold transition-all border-slate-600 text-slate-400 hover:border-slate-500");
+  b.className="m-btn rounded-2xl border-[3px] py-3.5 font-display font-semibold transition-all border-amber-400 bg-amber-400/10 text-amber-300";
+  document.getElementById("quiz-cfg").classList.toggle("hidden",mode!=="quiz");
+  document.getElementById("quiz-cfg").classList.toggle("grid",mode==="quiz");});
+
+function startQuiz(){qCount=0;
+  clearInterval(timerIv);
+  const oldRes=document.getElementById("results");if(oldRes)oldRes.remove();
+  if(mode==="quiz"){
+    let count=Math.min(50,Math.max(1,+document.getElementById("cfg-count").value||10));
+    if(!isPro()&&count>10){count=10;document.getElementById("cfg-count").value=10;try{toastFreeLimit();}catch(e){}}
+    document.getElementById("cfg-count").value=count;
+    const tmode=document.getElementById("cfg-tmode").value;
+    let tvalue=Math.max(3,+document.getElementById("cfg-value").value||20);
+    if(tmode==="total")tvalue=Math.min(120,Math.max(1,Math.round(+document.getElementById("cfg-value").value||5)));
+    document.getElementById("cfg-value").value=tvalue;
+    quiz={total:count,tmode:tmode,tvalue:tvalue,correct:0,times:[],answered:false,totalLeft:0,totalStarted:false,finished:false,op:op};
+  }document.getElementById("setup").classList.add("hidden");document.getElementById("quiz").classList.remove("hidden");nextQuestion();}
+function backToSetup(){clearInterval(timerIv);reviewMode=false;singleMode=false;const r=document.getElementById("results");if(r)r.remove();showView("setup");}
+
+function gen(){
+  let pool=GRADES[grade].ops.filter(o=>o!=="mixed");
+  let o=op==="mixed"?pool[rnd(0,pool.length-1)]:op,a,b,ans;
+  if(o==="addition"){
+    if(grade==="k"){a=rnd(1,5);b=rnd(1,5);}
+    else if(grade==="g1"){a=rnd(2,10);b=rnd(2,10);}
+    else if(grade==="g2"){a=rnd(10,60);b=rnd(10,49);}
+    else if(grade==="g3"){a=rnd(25,99);b=rnd(25,99);}
+    else if(grade==="g4"){a=rnd(100,499);b=rnd(100,499);}
+    else if(grade==="g5"){a=rnd(150,999);b=rnd(150,999);}
+    else if(grade==="g6"){a=rnd(1000,4999);b=rnd(1000,4999);}
+    else if(grade==="g7"){a=rnd(10000,49999);b=rnd(5000,49999);}
+    else{a=rnd(50000,99999);b=rnd(10000,99999);}
+    ans=a+b;
+  }else if(o==="subtraction"){
+    if(grade==="k"){a=rnd(2,10);b=rnd(1,a);}
+    else if(grade==="g1"){a=rnd(5,20);b=rnd(2,a);}
+    else if(grade==="g2"){a=rnd(20,99);b=rnd(5,a);}
+    else if(grade==="g3"){a=rnd(40,99);b=rnd(15,a);}
+    else if(grade==="g4"){a=rnd(200,999);b=rnd(100,a);}
+    else if(grade==="g5"){a=rnd(1000,9999);b=rnd(500,a);}
+    else if(grade==="g6"){a=rnd(10000,99999);b=rnd(5000,a);}
+    else if(grade==="g7"){a=rnd(50000,99999);b=rnd(10000,a);}
+    else{a=rnd(100000,999999);b=rnd(50000,a);}
+    ans=a-b;
+  }else if(o==="multiplication"){
+    if(grade==="g3"){a=rnd(2,6);b=rnd(2,6);}
+    else if(grade==="g4"){a=rnd(2,10);b=rnd(2,10);}
+    else if(grade==="g5"){a=rnd(11,99);b=rnd(2,9);}
+    else if(grade==="g6"){a=rnd(11,25);b=rnd(11,25);}
+    else if(grade==="g7"){a=rnd(26,99);b=rnd(11,19);}
+    else{a=rnd(25,99);b=rnd(21,99);}
+    ans=a*b;
+  }else{
+    const d=grade==="g3"?rnd(2,5):grade==="g4"?rnd(2,9):grade==="g5"?rnd(3,9):grade==="g6"?rnd(4,12):grade==="g7"?rnd(5,12):rnd(6,12);
+    const q=grade==="g3"?rnd(2,6):grade==="g4"?rnd(2,10):grade==="g5"?rnd(11,25):grade==="g6"?rnd(12,60):grade==="g7"?rnd(25,99):rnd(50,150);
+    b=d;a=d*q;ans=q;
+  }
+  return{op:o,a,b,ans};
+}
+
+function nextQuestion(){
+  if(singleMode){cur=singleCur;singleMode=false;}else cur=reviewMode?reviewList[qCount]:gen();
+  qCount++;hintIdx=0;
+  document.getElementById("quiz-card").className="bg-slate-800/80 backdrop-blur rounded-[2rem] border-2 shadow-2xl p-7 md:p-10 "+OPCLS[cur.op];
+  document.getElementById("steps-panel").style.background="var(--opL)";
+  document.getElementById("q-op-label").textContent=OPNAME[cur.op];
+  document.getElementById("q-grade-label").textContent="Grade "+GRADES[grade].label;
+  document.getElementById("q-text").textContent=cur.a+" "+OPSYM[cur.op]+" "+cur.b+" = ?";
+  document.getElementById("q-hint").classList.add("hidden");
+  const inp=document.getElementById("q-answer");inp.value="";inp.disabled=false;inp.classList.remove("border-emerald-400","border-rose-400");inp.focus();
+  document.getElementById("feedback").classList.add("hidden");
+  document.getElementById("answer-row").classList.remove("hidden");
+  document.getElementById("pic").innerHTML="";document.getElementById("visual").innerHTML="";
+  document.getElementById("mem-tips").classList.add("hidden");
+  tally=0;stars=0;renderTally();renderStars();
+  if(mode==="quiz"){
+    quiz.answered=false;
+    document.getElementById("quiz-progress").textContent=qCount+" / "+quiz.total;
+    startTimer();
+  }else{
+    document.getElementById("timer-wrap").classList.add("hidden");
+    clearInterval(timerIv);
+  }
+}
+
+/* ---------- PROBLEM-SPECIFIC HINTS ---------- */
+function problemHints(){
+  const{a,b,op:o}=cur;const h=[];
+  if(o==="addition"){
+    h.push(`Start with the ones: ${a%10} + ${b%10}. You can count up from ${Math.max(a%10,b%10)}! 👆`);
+    if((a%10)+(b%10)>=10)h.push(`⚠️ Careful! The ones add to ${(a%10)+(b%10)} — that's 10 or more, so a 1 will hop over to the tens! 🐇`);
+    else h.push(`The ones column is easy (no carry!). Now add the tens: ${Math.floor(a/10)%10} + ${Math.floor(b/10)%10}.`);
+    if(a%10===9||b%10===9)h.push(`💡 Trick: one number ends in 9! Add 10 instead, then take away 1.`);
+  }else if(o==="subtraction"){
+    if(a%10<b%10)h.push(`⚠️ Heads up: ${a%10} is smaller than ${b%10} — you'll need to BORROW from the tens! 🔄`);
+    else h.push(`The ones column is easy: ${a%10} − ${b%10}. Start there!`);
+    h.push(`💡 Check your answer backwards: (your answer) + ${b} should equal ${a}!`);
+  }else if(o==="multiplication"){
+    h.push(`Start with the ones: ${a%10} × ${b}. Skip-count if it helps: ${b}, ${b*2}, ${b*3}… 🐸`);
+    if(b===9||a===9)h.push(`💡 It's a ×9! Do ×10 then take away one group: ${Math.max(a,b)}×10 − ${Math.max(a,b)}.`);
+    else if(b===5||a===5)h.push(`💡 ×5 is easy — the answer always ends in 5 or 0!`);
+    else h.push(`💡 Break it up: ${a} × ${b} = ${Math.floor(a/10)*10} × ${b} + ${a%10} × ${b}. Smaller pieces!`);
+  }else{
+    const D=String(a).split("").map(Number);
+    const first=D.length>1&&D[0]<b?D[0]*10+D[1]:D[0];
+    h.push(`Ask: how many ${b}s fit into ${first}? Try ${b} × 5 = ${b*5} and compare! 🤔`);
+    h.push(`💡 Remember your times tables backwards: ${b} × ${cur.ans} = ${a}. Do you know that fact?`);
+  }
+  return h;
+}
+function showHint(){
+  const hints=problemHints();
+  const el=document.getElementById("q-hint");
+  el.textContent="🐾 "+hints[hintIdx%hints.length];
+  el.classList.remove("hidden");hintIdx++;
+}
+
+function confetti(){
+  const colors=["#f59e0b","#34d399","#a78bfa","#38bdf8","#f43f5e","#facc15"];
+  const wrap=document.getElementById("confetti");
+  for(let i=0;i<50;i++){const c=document.createElement("div");c.className="confetti";const s=rnd(6,12);
+    c.style.cssText=`left:${rnd(0,100)}vw;width:${s}px;height:${s*(Math.random()>.5?1:2)}px;background:${colors[i%6]};border-radius:${Math.random()>.5?"50%":"2px"};animation-duration:${rnd(18,32)/10}s;animation-delay:${rnd(0,20)/100}s`;
+    wrap.appendChild(c);setTimeout(()=>c.remove(),4000);}
+}
+
+function fmtTime(s){return Math.floor(s/60)+":"+String(s%60).padStart(2,"0");}
+function startTimer(){
+  const wrap=document.getElementById("timer-wrap");
+  const bar=document.getElementById("timer-bar"),txt=document.getElementById("timer-text");
+  quiz.qStart=Date.now();
+  if(quiz.tmode==="none"){wrap.classList.add("hidden");return;}
+  wrap.classList.remove("hidden");
+  if(quiz.tmode==="each"){
+    clearInterval(timerIv);
+    let left=quiz.tvalue;
+    const draw=()=>{txt.textContent=left+"s";const p=left/quiz.tvalue*100;bar.style.width=p+"%";
+      bar.style.background=p>50?"#34d399":p>20?"#fbbf24":"#f43f5e";};
+    draw();
+    timerIv=setInterval(()=>{left--;draw();
+      if(left<=0){clearInterval(timerIv);if(quiz&&!quiz.answered)quizRespond(false,true);}},1000);
+  }else{ /* total: one countdown for the whole test */
+    if(quiz.totalStarted){return;}
+    quiz.totalStarted=true;
+    quiz.totalLeft=quiz.tvalue*60;quiz.totalMax=quiz.totalLeft;
+    clearInterval(timerIv);
+    const drawT=()=>{txt.textContent=fmtTime(quiz.totalLeft)+" left";const p=quiz.totalLeft/quiz.totalMax*100;bar.style.width=p+"%";
+      bar.style.background=p>50?"#34d399":p>20?"#fbbf24":"#f43f5e";};
+    drawT();
+    timerIv=setInterval(()=>{quiz.totalLeft--;drawT();
+      if(quiz.totalLeft<=0){clearInterval(timerIv);quiz.timeUp=true;if(quiz&&!quiz.finished)finishQuiz();}},1000);
+  }
+}
+function quizRespond(ok,timedOut){
+  if(!quiz||quiz.answered)return;quiz.answered=true;clearInterval(timerIv);
+  quiz.times.push((Date.now()-quiz.qStart)/1000);
+  const inp=document.getElementById("q-answer");inp.disabled=true;
+  logAnswer(cur.op,ok);
+  if(ok){quiz.correct++;score+=10;streak++;document.getElementById("q-hint").textContent="✅ Correct! "+cur.ans+" is right!";confetti();}
+  else{streak=0;document.getElementById("q-hint").textContent=(timedOut?"⏰ Time's up! ":"❌ Not quite! ")+"The answer was "+cur.ans+".";}
+  document.getElementById("q-hint").classList.remove("hidden");
+  inp.classList.add(ok?"border-emerald-400":"border-rose-400");
+  document.getElementById("score").textContent=score;document.getElementById("streak").textContent=streak;
+  {const d=pd();d.score=score;d.streak=streak;savePd(d);}
+  setTimeout(()=>{if(qCount>=quiz.total)finishQuiz();else nextQuestion();},1300);
+}
+function recommend(pct,qop,total){
+  const opName=qop==="mixed"?"Mixed problems":OPNAME[qop]||qop;
+  const next={k:"grade 1",g1:"grade 2",g2:"grade 3",g3:"grade 4",g4:"grade 5",g5:"grade 6",g6:"grade 7",g7:"grade 8",g8:"even bigger numbers"}[grade];
+  if(pct>=90)return `Amazing! You're mastering ${opName}. Level up: try ${next}, ${Math.min(total+10,50)} questions, or a shorter timer. 🏔️`;
+  if(pct>=70)return `Solid work on ${opName}! Do one more quiz like this, then give Mixed mode a try. 😊`;
+  if(pct>=40)return `Good effort! Practice ${opName} in Practice mode — work through 5 problems with the step-by-step before your next quiz. 🛠️`;
+  return `Let's rebuild the basics, ${studentName}! Switch to Practice mode, choose ${opName}, and solve a few with Hoot's steps. You'll be surprised how fast it clicks. 🐣`;
+}
+function fmtDate(d){return d.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});}
+function renderAccount(){
+  const el=document.getElementById("account-body");
+  const pro=isPro();
+  let renew=new Date();renew.setMonth(renew.getMonth()+1);
+  const plan=localStorage.getItem("ms_pro_plan")==="y"?"Yearly ($39/yr)":"Monthly ($4.99/mo)";
+  const email=(localStorage.getItem("ms_parent_email")||"");
+  const card=(l,v)=>`<div class="bg-slate-900/70 border border-slate-700 rounded-2xl p-5"><span class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-500 mb-1">${l}</span><b class="text-white">${v}</b></div>`;
+  let h=`<div class="bg-slate-800/70 border-2 ${pro?"border-emerald-500/50":"border-slate-700"} rounded-3xl p-6 mb-6">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-display font-bold text-white text-lg">⭐ Parent Plan</h3>
+      <span class="text-[10px] font-bold px-3 py-1 rounded-full ${pro?"bg-emerald-500/20 text-emerald-300 border border-emerald-500/40":"bg-slate-700 text-slate-400"}">${pro?"ACTIVE":"NOT SUBSCRIBED"}</span>
+    </div>
+    ${pro?`<div class="grid grid-cols-2 gap-3 mb-5">
+      ${card("Plan",plan)}
+      ${card("Next billing",fmtDate(renew))}
+      ${card("Payment method","Visa •••• 4242")}
+      ${card("Students",kids.length+" profile"+(kids.length===1?"":"s"))}
+    </div>
+    <p class="text-[11px] text-slate-500 mb-4">Billing is simulated in this demo. When real payments launch, this is where Stripe's Customer Portal would manage everything.</p>
+    <div class="flex flex-wrap gap-3">
+      <button onclick="openPaywall()" class="bg-slate-700 hover:bg-slate-600 text-white font-display font-bold px-5 py-2.5 rounded-xl text-sm transition-all">Change plan</button>
+      <button onclick="cancelSub()" class="bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/40 text-rose-300 font-display font-bold px-5 py-2.5 rounded-xl text-sm transition-all">Cancel subscription</button>
+    </div>`
+    :`<p class="text-sm text-slate-400 mb-5">You're on the <b class="text-white">Free plan</b> — unlimited practice, but no saved progress, Dashboard, Worksheets or Past problems.</p>
+    <button onclick="openPaywall()" class="bg-gradient-to-r from-amber-400 to-orange-500 text-white font-display font-bold px-6 py-3 rounded-xl transition-all">⭐ Get Parent Plan — $4.99/mo</button>`}
+  </div>
+  <div class="bg-slate-800/70 border border-slate-700 rounded-3xl p-6 mb-6">
+    <h3 class="font-display font-bold text-white mb-4">👤 Parent contact</h3>
+    <label class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-500 mb-1.5">EMAIL FOR RECEIPTS &amp; REPORTS</label>
+    <input id="parent-email" type="email" value="${email}" placeholder="you@email.com" class="w-full bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
+    <button onclick="saveParentEmail()" class="mt-3 bg-slate-700 hover:bg-slate-600 text-white font-display font-bold px-5 py-2.5 rounded-xl text-sm transition-all">Save</button>
+  </div>
+  <div class="bg-slate-800/70 border border-slate-700 rounded-3xl p-6 text-sm text-slate-400 leading-relaxed">
+    <b class="text-white">📦 Your data</b><br/>${kids.length} student profile(s) · stored on this device · nothing is sold or shared.<br/>
+    Questions? <a href="mailto:support@noctumath.com" class="text-amber-300 font-semibold">support@noctumath.com</a>
+  </div>`;
+  el.innerHTML=h;
+}
+function saveParentEmail(){try{localStorage.setItem("ms_parent_email",document.getElementById("parent-email").value.trim());}catch(e){}
+  const b=event.target;b.textContent="Saved ✓";setTimeout(()=>b.textContent="Save",1500);}
+function cancelSub(){
+  if(!confirm("Cancel your Parent Plan?\n\nYou'll keep access until the end of this billing period, then revert to Free (progress stops saving)."))return;
+  try{localStorage.setItem("ms_pro","0");}catch(e){}
+  renderAccount();try{renderAds();}catch(e){}
+  alert("Subscription canceled. We're sad to see you go — your students can keep practicing free anytime. 🦉");
+}
+function renameKid(){
+  const k=kids.find(x=>x.id===dashKid);if(!k)return;
+  const n=(prompt("Rename student:",k.name)||"").trim();
+  if(!n)return;
+  k.name=n;saveKids();
+  if(dashKid===msCur){studentName=n;const si=document.getElementById("student-name");if(si)si.value=n;setName();}
+  renderKidChips();renderDash();
+}
+function exportReport(){
+  const dk=kids.find(k=>k.id===dashKid)||kids[0];
+  const d=pd(dashKid);const log=d.log||[];const quizzes=d.quizzes||[];
+  const solved=log.length,correct=log.filter(x=>x.ok).length;
+  const acc=solved?Math.round(correct/solved*100):0;
+  let rows=quizzes.map(q=>`<tr><td>${q.d}</td><td>${q.op}</td><td>${q.correct}/${q.total}</td><td>${q.pct}%</td></tr>`).join("");
+  const w=window.open("","_blank");
+  w.document.write(`<!DOCTYPE html><html><head><title>NoctuMath Report — ${dk.name}</title><style>body{font-family:Arial;margin:48px;color:#0f172a;max-width:700px}h1{font-size:26px}h2{font-size:17px;margin-top:28px}table{border-collapse:collapse;width:100%;margin-top:10px}td,th{border:1px solid #cbd5e1;padding:8px 10px;font-size:13px;text-align:left}th{background:#f1f5f9}.big{font-size:34px;font-weight:800}</style></head><body>
+  <h1>🦉 NoctuMath — Progress Report</h1><p><b>Student:</b> ${dk.name} &nbsp;·&nbsp; <b>Generated:</b> ${new Date().toLocaleDateString()}</p>
+  <h2>Overview</h2><p class="big">${solved} problems · ${acc}% accuracy · ${d.streak||0} current streak</p>
+  <h2>Recent quizzes</h2><table><tr><th>Date</th><th>Topic</th><th>Score</th><th>Percent</th></tr>${rows||'<tr><td colspan="4">No quizzes yet</td></tr>'}</table>
+  <p style="color:#64748b;font-size:12px;margin-top:32px">Generated by NoctuMath · noctumath.com · support@noctumath.com</p></body></html>`);
+  w.document.close();w.focus();setTimeout(()=>w.print(),400);
+}
+function gradeFor(p){return p>=90?["A+","🏆","Math Legend!"]:p>=80?["A","🌟","Excellent work!"]:p>=70?["B","😊","Great job!"]:p>=60?["C","💪","Good effort!"]:p>=40?["D","📖","Keep practicing!"]:["F","🐣","Practice mode will help!"];}
+function finishQuiz(){
+  if(quiz&&quiz.finished)return;quiz.finished=true;
+  clearInterval(timerIv);
+  ["answer-row","timer-wrap","help-area","tools-toggle","feedback"].forEach(id=>document.getElementById(id).classList.add("hidden"));
+  const pct=Math.round(quiz.correct/quiz.total*100);
+  const g=gradeFor(pct);
+  const avg=quiz.times.length?(quiz.times.reduce((a,b)=>a+b,0)/quiz.times.length).toFixed(1):"—";
+  const dB=pd();let best=dB.best;
+  if(!best||pct>best.pct){best={pct:pct,score:quiz.correct,total:quiz.total};dB.best=best;savePd(dB);}
+  const d=document.createElement("div");
+  d.id="results";
+  d.className="bg-slate-800/80 backdrop-blur rounded-[2rem] border-2 border-slate-600 shadow-2xl p-8 md:p-10 text-center";
+  d.innerHTML=`
+    <div class="text-7xl mb-3 pop inline-block">${g[1]}</div>
+    <h2 class="text-3xl font-display font-bold text-white">Quiz complete, ${studentName}!</h2>
+    <p class="text-slate-400 mt-1 font-medium">${g[2]}</p>
+    <div class="grid grid-cols-3 gap-3 max-w-md mx-auto mt-7">
+      <div class="bg-slate-900/70 border border-slate-700 rounded-2xl p-4"><p class="text-3xl font-display font-bold text-white">${quiz.correct}/${quiz.total}</p><p class="text-[10px] font-extrabold uppercase tracking-widest text-slate-500 mt-1">Correct</p></div>
+      <div class="bg-slate-900/70 border-2 rounded-2xl p-4" style="border-color:var(--op)"><p class="text-3xl font-display font-bold" style="color:var(--op)">${pct}%</p><p class="text-[10px] font-extrabold uppercase tracking-widest text-slate-500 mt-1">Grade ${g[0]}</p></div>
+      <div class="bg-slate-900/70 border border-slate-700 rounded-2xl p-4"><p class="text-3xl font-display font-bold text-white">${avg}s</p><p class="text-[10px] font-extrabold uppercase tracking-widest text-slate-500 mt-1">Avg time</p></div>
+    </div>
+    <p class="text-xs text-slate-500 font-bold mt-4">🏅 Personal best: ${best.pct}%</p>
+    <div class="max-w-md mx-auto mt-5 bg-amber-400/10 border-2 border-amber-400/40 rounded-2xl p-5 text-left">
+      <h4 class="font-display font-bold text-amber-300 flex items-center gap-2 mb-2">📌 Hoot's recommendation</h4>
+      <p class="text-sm text-slate-300 leading-relaxed">${recommend(pct,quiz.op,quiz.total)}${quiz.timeUp?"<br><span class='text-rose-300 font-semibold'>⏰ The timer ran out — try fewer questions or more time!</span>":""}</p>
+    </div>
+    <div class="flex flex-wrap justify-center gap-3 mt-7">
+      <button onclick="startQuiz()" class="bg-gradient-to-r from-emerald-500 to-sky-500 hover:from-emerald-600 hover:to-sky-600 text-white font-display font-bold px-7 py-3.5 rounded-2xl transition-all">🔄 Try again</button>
+      <button onclick="backToSetup()" class="bg-slate-700 hover:bg-slate-600 text-white font-display font-bold px-7 py-3.5 rounded-2xl transition-all">🏠 Home</button>
+    </div>
+    ${pct<70?'<p class="text-sm text-amber-300/90 font-semibold mt-5">💡 Tip: try Practice mode — Hoot will show you the steps for problems like these!</p>':""}`;
+  try{pushQuizRecord(pct);}catch(e){}
+  document.getElementById("quiz").appendChild(d);
+  d.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+function checkAnswer(){
+  const inp=document.getElementById("q-answer");const v=inp.value.trim();
+  if(v===""){inp.classList.add("shake");setTimeout(()=>inp.classList.remove("shake"),450);return;}
+  const ok=(+v===cur.ans);
+  logAnswer(cur.op,ok);
+  if(mode==="quiz"){quizRespond(ok,false);return;}
+  inp.disabled=true;
+  document.getElementById("answer-row").classList.add("hidden");
+  document.getElementById("q-hint").classList.add("hidden");
+  document.getElementById("feedback").classList.remove("hidden");
+  document.getElementById("fb-face").textContent=ok?"🥳":"🦉";
+  document.getElementById("fb-correct").classList.toggle("hidden",!ok);
+  document.getElementById("fb-wrong").classList.toggle("hidden",ok);
+  document.getElementById("fb-answer").textContent=cur.ans;
+  if(ok){document.getElementById("fb-cheer").textContent=CHEER[rnd(0,CHEER.length-1)].replaceAll("__NAME__",studentName);score+=10;streak++;confetti();}
+  else{streak=0;}
+  document.getElementById("score").textContent=score;document.getElementById("streak").textContent=streak;
+  {const d=pd();d.score=score;d.streak=streak;savePd(d);}
+  buildSteps();
+  window.scrollTo({top:document.getElementById("feedback").offsetTop-20,behavior:"smooth"});
+}
+
+/* ================= INTERACTIVE STEP ENGINE ================= */
+let steps=[],revealed=0;
+function step(t,ask,act,after){steps.push({t,ask:ask==null?null:String(ask),act,after});}
+function buildSteps(){
+  steps=[];revealed=0;
+  document.getElementById("steps").innerHTML="";
+  document.getElementById("visual").innerHTML="";
+  document.getElementById("steps-final").classList.add("hidden");
+  document.getElementById("btn-next-step").classList.remove("hidden");
+  if(cur.op==="addition")buildAdd(cur.a,cur.b);
+  else if(cur.op==="subtraction")buildSub(cur.a,cur.b);
+  else if(cur.op==="multiplication")buildMul(cur.a,cur.b);
+  else buildDiv(cur.a,cur.b);
+  document.getElementById("mem-grade").textContent=GRADES[grade].tip;
+  document.getElementById("mem-list").innerHTML=aboutThisProblem().map(t=>`<li class="flex gap-2"><span class="text-yellow-400 shrink-0">⭐</span><span>${t}</span></li>`).join("");
+  revealStep();
+}
+function aboutThisProblem(){
+  const{a,b,op:o,ans}=cur;const t=[];
+  if(o==="addition"){
+    if(a%10===9||b%10===9)t.push(`<b>${Math.max(a,b)} ends in 9</b> — next time add 10 and subtract 1: it turns ${a} + ${b} into an easier problem!`);
+    if((a%10)+(b%10)>=10)t.push(`This had a <b>carry</b>. Practice your <b>bonds to 10</b> (1+9, 2+8, 3+7…) and carries become instant!`);
+    t.push(`<b>Check it:</b> ${ans} − ${b} should equal ${a}. Always check with the opposite operation!`);
+  }else if(o==="subtraction"){
+    if(a%10<b%10)t.push(`This needed a <b>borrow</b>. Remember: borrowing makes the top digit 10 bigger — ${a%10} became ${a%10+10}!`);
+    t.push(`<b>Fact family:</b> ${ans} + ${b} = ${a}. If you know that addition fact, this subtraction becomes easy! 👨‍👧‍👦`);
+  }else if(o==="multiplication"){
+    if(b===9||a===9)t.push(`<b>×9 trick:</b> ${Math.max(a,b)} × 9 = ${Math.max(a,b)}0 − ${Math.max(a,b)} = ${ans}. Or use the finger trick! ✋`);
+    else if(b===5||a===5)t.push(`<b>×5 rule:</b> the answer always ends in 5 or 0. ${a} × ${b} = ${ans}!`);
+    else if(b<=6||a<=6)t.push(`<b>Skip-count</b> to remember: ${b}, ${b*2}, ${b*3}, ${b*4}, … up to ${b} × ${a} = ${ans}. Say it like a chant! 🎵`);
+    else t.push(`<b>Break it apart:</b> ${a} × ${b} = (${Math.floor(a/10)*10} × ${b}) + (${a%10} × ${b}). Smaller problems are friendlier!`);
+    t.push(`<b>Fact family bonus:</b> ${ans} ÷ ${b} = ${a} too — three facts, one memory!`);
+  }else{
+    t.push(`<b>Fact family:</b> ${b} × ${ans} = ${a}. Learn this one fact and you own ${a} ÷ ${b}, ${a} ÷ ${ans}, AND ${ans} × ${b}! 👑`);
+    t.push(`<b>Check it:</b> multiply back — ${b} × ${ans} should equal ${a}. ✔️`);
+  }
+  return t;
+}
+function litBox(sel){document.querySelectorAll(".vc-box.lit").forEach(e=>e.classList.remove("lit"));if(!sel)return;const e=typeof sel==="string"?document.querySelector(sel):sel;if(e)e.classList.add("lit");}
+function putDigit(r,c,d){const box=document.querySelector(`.vc-box[data-r="${r}"][data-c="${c}"]`);if(!box)return;box.textContent=d;box.classList.add("newdigit");setTimeout(()=>box.classList.remove("newdigit"),450);}
+function carryTo(slot,txt){const s=document.querySelector(`[data-carryslot="${slot}"]`);if(s)s.innerHTML=`<span class="vc-carry">${txt}</span>`;}
+
+function revealStep(){
+  if(revealed>=steps.length){finishSteps();return;}
+  const s=steps[revealed];revealed++;
+  const wrap=document.getElementById("steps");
+  const d=document.createElement("div");
+  d.className="step flex gap-3 bg-slate-900/70 border border-slate-700/70 rounded-2xl px-4 py-3";
+  let inner;
+  if(s.ask!=null){
+    inner=`<span class="w-7 h-7 rounded-full text-white text-sm font-display font-bold flex items-center justify-center shrink-0 mt-1 shadow-md" style="background:var(--op)">${revealed}</span>
+      <p class="text-sm md:text-base text-slate-200 leading-relaxed font-medium">${s.t} <input class="ask-in" inputmode="numeric" autocomplete="off"> <span class="ask-ok hidden font-bold text-emerald-400">✔</span><span class="ask-after hidden text-xs font-bold opc block mt-1"></span></p>`;
+  }else{
+    inner=`<span class="w-7 h-7 rounded-full text-white text-sm font-display font-bold flex items-center justify-center shrink-0 mt-0.5 shadow-md" style="background:var(--op)">${revealed}</span><p class="text-sm md:text-base text-slate-200 leading-relaxed font-medium">${s.t}</p>`;
+  }
+  d.innerHTML=inner;wrap.appendChild(d);
+  d.scrollIntoView({behavior:"smooth",block:"nearest"});
+  if(s.ask!=null){
+    const inp=d.querySelector(".ask-in");inp.focus();
+    inp.addEventListener("input",()=>{
+      if(inp.value===s.ask){
+        d.classList.add("solved");
+        d.querySelector(".ask-ok").classList.remove("hidden");
+        if(s.after){const af=d.querySelector(".ask-after");af.innerHTML=s.after;af.classList.remove("hidden");}
+        if(s.act)s.act();
+        inp.disabled=true;
+        setTimeout(()=>revealStep(),700);
+      }else if(inp.value.length>=s.ask.length){inp.classList.add("bad");setTimeout(()=>{inp.classList.remove("bad");inp.value="";},450);}
+    });
+  }else if(s.act){s.act();}
+}
+function skipStep(){
+  const items=document.querySelectorAll("#steps .step");
+  for(const d of items){
+    if(d.dataset.solved)continue;
+    const inp=d.querySelector(".ask-in");
+    if(inp&&!inp.disabled){
+      const s=steps[[...items].indexOf(d)];
+      if(s.act)s.act();
+      d.classList.add("solved");inp.disabled=true;inp.value=s.ask;
+      d.querySelector(".ask-ok").classList.remove("hidden");
+      if(s.after){const af=d.querySelector(".ask-after");af.innerHTML=s.after;af.classList.remove("hidden");}
+      return;
+    }
+  }
+  revealStep();
+}
+function finishSteps(){
+  document.getElementById("btn-next-step").classList.add("hidden");
+  const f=document.getElementById("steps-final");
+  f.innerHTML="🎉 Answer: <b>"+cur.ans+"</b>!";
+  f.classList.remove("hidden");void f.offsetWidth;f.classList.add("pop");
+  litBox(null);
+  document.getElementById("mem-tips").classList.remove("hidden");
+  document.getElementById("mem-tips").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function dbox(r,c,d){return `<span class="vc-box" data-r="${r}" data-c="${c}">${d===""?"&nbsp;":d}</span>`;}
+function colVisual(a,b,sign,n){
+  let h=`<div class="vc inline-block"><div class="vc-row" style="height:1.5rem">`;for(let i=0;i<n;i++)h+=`<span class="vc-gap" data-carryslot="${i}"></span>`;h+=`</div>`;
+  const A=String(a).padStart(n," ").split(""),B=String(b).padStart(n," ").split("");
+  h+=`<div class="vc-row">${A.map((d,i)=>dbox(0,i,d===" "?"":d)).join("")}</div>`;
+  h+=`<div class="vc-row"><span class="vc-sign">${sign}</span>${B.map((d,i)=>dbox(1,i,d===" "?"":d)).join("")}</div>`;
+  h+=`<div class="vc-line"></div><div class="vc-row"><span class="vc-sign">&nbsp;</span>${Array.from({length:n},(_,i)=>dbox(2,i,"")).join("")}</div></div>`;
+  return h;
+}
+
+/* ---------- PICTURE VISUALS ---------- */
+function numLinePic(a,b,isAdd){
+  const start=isAdd?a:b,end=isAdd?a+b:a-b,step1=isAdd?b:a-b;
+  const lo=Math.min(start,end)-1,hi=Math.max(start,end)+1,range=hi-lo,W=560,px=40,pw=W-80;
+  const X=v=>px+((v-lo)/range)*pw;
+  const jumps=[];let rem=step1;while(rem>=10){jumps.push(10);rem-=10;}if(rem>0)jumps.push(rem);
+  let ticks="";for(let v=lo;v<=hi;v++){if(v%5)continue;ticks+=`<line x1="${X(v)}" y1="52" x2="${X(v)}" y2="60" stroke="#475569" stroke-width="2"/><text x="${X(v)}" y="76" font-size="11" fill="#94a3b8" text-anchor="middle" font-family="Fredoka">${v}</text>`;}
+  let arrows="";let pos=start;
+  jumps.forEach(j=>{const x1=X(pos),x2=X(pos+(isAdd?j:-j));
+    arrows+=`<line x1="${x1}" y1="38" x2="${x2}" y2="38" stroke="var(--op)" stroke-width="3.5" marker-end="url(#arr)"/><text x="${(x1+x2)/2}" y="26" font-size="12.5" font-weight="700" fill="var(--op)" text-anchor="middle" font-family="Fredoka">${isAdd?"+":"−"}${j}</text>`;
+    pos+=isAdd?j:-j;});
+  return `<svg viewBox="0 0 ${W} 90" class="w-full max-w-xl mx-auto"><defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6" fill="none" stroke="var(--op)" stroke-width="2"/></marker></defs>
+  <line x1="${px-14}" y1="56" x2="${W-px+14}" y2="56" stroke="#334155" stroke-width="3"/>${ticks}${arrows}
+  <circle cx="${X(start)}" cy="56" r="7" fill="#fbbf24"/><text x="${X(start)}" y="46" font-size="13" font-weight="700" fill="#fbbf24" text-anchor="middle" font-family="Fredoka">${start}</text>
+  <circle cx="${X(end)}" cy="56" r="7" fill="var(--op)"/></svg>
+  <p class="text-xs text-slate-400 font-bold mt-1">Hop along! ${jumps.map(j=>(isAdd?"+":"−")+j).join(", ")} ${isAdd?"→":"←"} lands on the answer!</p>`;
+}
+function gridPic(a,b){
+  if(a<=12&&b<=12){let rows="";for(let i=0;i<a;i++){let s="";for(let j=0;j<b;j++)s+="<span>⭐</span>";rows+=`<div class="flex justify-center gap-[2px] leading-5 text-sm">${s}</div>`;}
+    return `<p class="text-sm font-bold text-slate-300 mb-2">${a} rows of ${b} stars — count them all!</p><div class="inline-block bg-slate-800/80 rounded-xl p-3">${rows}</div><p class="text-xs text-slate-400 font-bold mt-2">That's ${a} × ${b} = <b class="opc">${cur.ans}</b> stars! ✨</p>`;}
+  let g="";for(let x=0;x<b&&x<10;x++){let s="";for(let k=0;k<a&&k<12;k++)s+="🍪";g+=`<div class="bg-slate-800/80 rounded-xl px-3 py-1.5 text-sm">${s}</div>`;}
+  return `<p class="text-sm font-bold text-slate-300 mb-2">${b} groups with ${a} cookies each:</p><div class="flex flex-wrap justify-center gap-2">${g}</div><p class="text-xs text-slate-400 font-bold mt-2">Add them: ${a} × ${b} = <b class="opc">${cur.ans}</b> 🍪</p>`;
+}
+function sharePic(a,b){
+  const q=a/b;
+  if(q<=12){let plates="";for(let g=0;g<b;g++){let s="";for(let k=0;k<q;k++)s+="🍕";plates+=`<div class="flex flex-col items-center"><div class="text-lg leading-6">${s}</div><span class="text-[10px] font-bold text-slate-400 mt-1">plate ${g+1}</span></div>`;}
+    return `<p class="text-sm font-bold text-slate-300 mb-2">Share ${a} slices equally on ${b} plates:</p><div class="flex flex-wrap justify-center gap-4">${plates}</div><p class="text-xs text-slate-400 font-bold mt-2">Each plate gets <b class="opc">${q}</b> → ${a} ÷ ${b} = <b class="opc">${q}</b>! 🎉</p>`;}
+  return `<p class="text-sm font-bold text-slate-300">That's a lot of slicing! 🍕 Each of the ${b} plates gets <b class="opc">${q}</b> slices. Check with long division below! 👇</p>`;
+}
+
+/* ---------- OPERATION BUILDERS (with asks) ---------- */
+function buildAdd(a,b){
+  document.getElementById("pic").innerHTML=(a+b<=60)?numLinePic(a,b,true):"";
+  const A=String(a).split("").map(Number),B=String(b).split("").map(Number);
+  const n=Math.max(A.length,B.length);while(A.length<n)A.unshift(0);while(B.length<n)B.unshift(0);
+  document.getElementById("visual").innerHTML=colVisual(a,b,"+",n);
+  step(`Stack the numbers up nice and tall, ones on top of ones! 🏰`);
+  let carry=0;
+  for(let i=n-1;i>=0;i--){
+    const col=place[n-i],s=A[i]+B[i]+carry,c=Math.floor(s/10);
+    const t=carry?`Add the ${col} digits: ${A[i]} + ${B[i]} + 1 =`: `Add the ${col} digits: ${A[i]} + ${B[i]} =`;
+    step(t,s,
+      (()=>{const cc=i,dd=s%10,cr=c;return ()=>{putDigit(2,cc,String(dd));if(cr)carryTo(cc-1,String(cr));litBox(document.querySelector(`.vc-box[data-r="2"][data-c="${cc}"]`));};})(),
+      s>=10?`Write ${s%10} and carry ${c}! 🐇`:`Nice!`);
+    carry=c;
+  }
+  if(carry)step(`One last little 1 is still travelling! Pop it at the front. ✈️`,null,()=>{
+    const row=document.querySelector('#visual .vc-row:last-child');
+    const box=document.createElement("span");box.className="vc-box newdigit";box.textContent="1";box.style.marginRight=".2rem";
+    row.insertBefore(box,row.children[1]);});
+  step(`Ta-da! <b>${a} + ${b} = ${cur.ans}</b>! 🎪`,null,()=>litBox(null));
+}
+
+function buildSub(a,b){
+  document.getElementById("pic").innerHTML=(a<=60)?numLinePic(a,b,false):"";
+  const A=String(a).split("").map(Number),B=String(b).split("").map(Number);
+  const n=A.length;while(B.length<n)B.unshift(0);
+  document.getElementById("visual").innerHTML=colVisual(a,b,"−",n);
+  step(`Put the bigger number on top — it's the boss! 👑`);
+  const top=[...A];
+  for(let i=n-1;i>=0;i--){
+    const col=place[n-i];
+    if(top[i]>=B[i]){
+      step(`The ${col} column: ${top[i]} − ${B[i]} =`,top[i]-B[i],
+        (()=>{const cc=i,dd=top[i]-B[i];return ()=>{putDigit(2,cc,String(dd));litBox(document.querySelector(`.vc-box[data-r="2"][data-c="${cc}"]`));};})(),null);
+    }else{
+      let j=i-1;while(top[j]===0)j--;
+      step(`Uh oh! ${top[i]} is smaller than ${B[i]} — time to <b>BORROW</b>! 🔄`,null,
+        (()=>{const cc=i;return ()=>{litBox(document.querySelector(`.vc-box[data-r="0"][data-c="${cc}"]`));};})(),null);
+      step(`Borrow 1 from the ${place[n-j]} column. ${top[i]} grows into <b>${top[i]+10}</b>! 💪`,null,
+        (()=>{const jj=j,cc=i,old=top.slice();return ()=>{
+          document.querySelector(`.vc-box[data-r="0"][data-c="${jj}"]`).textContent=String(old[jj]-1);
+          for(let k=jj+1;k<cc;k++)document.querySelector(`.vc-box[data-r="0"][data-c="${k}"]`).textContent="9";
+          const eb=document.querySelector(`.vc-box[data-r="0"][data-c="${cc}"]`);eb.textContent=String(old[cc]+10);eb.classList.add("newdigit");setTimeout(()=>eb.classList.remove("newdigit"),450);
+          litBox(eb);};})(),null);
+      step(`Now subtract: ${top[i]+10} − ${B[i]} =`,top[i]+10-B[i],
+        (()=>{const cc=i;return ()=>{putDigit(2,cc,String(top[cc]+10-B[cc]));litBox(document.querySelector(`.vc-box[data-r="2"][data-c="${cc}"]`));};})(),null);
+      for(let k=j+1;k<i;k++)top[k]=9;top[j]--;top[i]+=10;
+    }
+  }
+  step(`You did it! <b>${a} − ${b} = ${cur.ans}</b>! 🎉`,null,()=>litBox(null));
+}
+
+function buildMul(a,b){
+  const B=String(b).split("").map(Number),A=String(a).split("").map(Number);
+  document.getElementById("pic").innerHTML=(a<=15&&b<=15)?gridPic(a,b):"";
+  if(B.length===1){
+    const n=A.length;
+    document.getElementById("visual").innerHTML=colVisual(a,b,"×",n);
+    step(`Multiply ${a} by ${b}, one digit at a time, right to left! ➡️`);
+    let carry=0;
+    for(let i=n-1;i>=0;i--){
+      const col=place[n-i],p=A[i]*b+carry;
+      step(`${A[i]} × ${b}${carry?` + ${carry} =`:" ="}`,p,
+        (()=>{const cc=i,dd=p%10,cr=Math.floor(p/10);return ()=>{putDigit(2,cc,String(dd));if(cr)carryTo(cc-1,String(cr));litBox(document.querySelector(`.vc-box[data-r="2"][data-c="${cc}"]`));};})(),
+        p>=10?`Write ${p%10}, carry ${Math.floor(p/10)}! 🐸`:`Easy!`);
+      carry=Math.floor(p/10);
+    }
+    if(carry)step(`The last carry (${carry}) goes right in front! 🏁`);
+    step(`Boom! <b>${a} × ${b} = ${cur.ans}</b>! 🚀`,null,()=>litBox(null));
+  }else{
+    const aD=String(a).split(""),bD=String(b).split("");
+    let h=`<div class="vc inline-block"><div class="vc-row">${aD.map((d,i)=>dbox(0,i,d)).join("")}</div><div class="vc-row"><span class="vc-sign">×</span>${bD.map((d,i)=>dbox(1,i,d)).join("")}</div><div class="vc-line"></div>`;
+    h+=`<div class="vc-row"><span class="vc-sign">&nbsp;</span>${Array.from({length:bD.length+1},(_,i)=>dbox(2,i,"")).join("")}</div>`;
+    h+=`<div class="vc-row"><span class="vc-sign">&nbsp;</span>${Array.from({length:bD.length+1},(_,i)=>dbox(3,i,"")).join("")}</div>`;
+    h+=`<div class="vc-line"></div><div class="vc-row"><span class="vc-sign">&nbsp;</span>${Array.from({length:bD.length+2},(_,i)=>dbox(4,i,"")).join("")}</div></div>`;
+    document.getElementById("visual").innerHTML=h;
+    step(`Trick: split ${b} into digits, multiply each, then add. 🤝`);
+    const rowDigits=(r,v)=>{const s=String(v).split("");const W=bD.length+1,start=W-s.length;for(let k=0;k<s.length;k++)putDigit(r,start+k,s[k]);};
+    const p1=a*B[1],p2=a*B[0];
+    step(`${a} × ${B[1]} (the ones digit) =`,p1,()=>{rowDigits(2,p1);litBox(null);},null);
+    step(`${a} × ${B[0]} = ${a*B[0]}, then shift one place (add a 0) →`,p2*10,()=>{rowDigits(3,p2*10);litBox(null);},null);
+    step(`Add them: ${p1} + ${p2}0 =`,cur.ans,()=>{rowDigits(4,cur.ans);litBox(null);},null);
+    step(`You multiplied two two-digit numbers! 🏆 <b>${a} × ${b} = ${cur.ans}</b>`);
+  }
+}
+
+function buildDiv(a,b){
+  const D=String(a).split("").map(Number);
+  document.getElementById("pic").innerHTML=(a<=120)?sharePic(a,b):"";
+  let h=`<div class="vc inline-block text-center"><div class="mb-1">`;
+  for(let i=0;i<D.length;i++)h+=`<span class="qbox" data-q="${i}">&nbsp;</span>`;
+  h+=`</div><div class="text-2xl font-bold mb-2 opc">⎯⎯ ${b} ⎯⎯</div><div class="text-4xl font-bold font-display text-white">${a}</div></div>`;
+  document.getElementById("visual").innerHTML=h;
+  step(`Sharing time! Split <b>${a}</b> into groups of <b>${b}</b>. How many groups? 🍕`);
+  let rem=0;const q=[];
+  for(let i=0;i<D.length;i++){
+    const cur2=rem*10+D[i];
+    if(cur2<b){
+      step(q.length===0?`The first digit ${D[i]} is too small — it gets a <b>0</b>, grab the next digit too: now ${cur2}. 🤲`:`Bring down → <b>${cur2}</b>. Too small — a <b>0</b> again!`,null,
+        (()=>{const ii=i;return ()=>{const qb=document.querySelector(`.qbox[data-q="${ii}"]`);qb.textContent="0";qb.classList.add("filled");};})(),null);
+      q.push(0);rem=cur2;continue;
+    }
+    const qt=Math.floor(cur2/b),m=qt*b;
+    step(`How many ${b}s fit into <b>${cur2}</b>? (${b} × ${qt} = ${m}) →`,qt,
+      (()=>{const ii=i,qq=qt;return ()=>{const qb=document.querySelector(`.qbox[data-q="${ii}"]`);qb.textContent=String(qq);qb.classList.add("filled");};})(),null);
+    step(`Take them away: ${cur2} − ${m} =`,cur2-m,null,null);
+    q.push(qt);rem=cur2-m;
+  }
+  while(q.length>1&&q[0]===0)q.shift();
+  step(`Count the top numbers: <b>${q.join("")}</b>. So ${a} ÷ ${b} = <b>${cur.ans}</b>! 🥳`);
+}
+
+document.getElementById("cfg-tmode").addEventListener("change",()=>{
+  const m=document.getElementById("cfg-tmode").value;
+  document.getElementById("cfg-value-label").textContent=m==="each"?"Seconds per question":m==="total"?"Minutes for whole test":"Time value";
+  document.getElementById("cfg-value").disabled=m==="none";
+});
+function showSetupRec(){
+  const best=pd().best;
+  const wrap=document.getElementById("setup-rec-wrap");
+  if(!best){wrap.innerHTML="";return;}
+  const r=recommend(best.pct,op,10).replace(/\. /,". ");
+  wrap.innerHTML=`<div class="bg-slate-800/70 border-2 border-amber-400/40 rounded-2xl px-5 py-4 flex items-start gap-3">
+    <span class="text-2xl">🎯</span>
+    <div><b class="text-amber-300 text-sm font-display">Hoot's recommendation for ${studentName}</b>
+    <p class="text-xs text-slate-400 mt-0.5">Last quiz: <b class="text-white">${best.pct}%</b> · ${r}</p></div></div>`;
+}
+
+window.addEventListener("load",()=>{
+  loadKids();const _d=pd();score=_d.score;streak=_d.streak;studentName=curKid().name;
+  renderKidChips();
+  document.getElementById("score").textContent=score;
+  document.getElementById("streak").textContent=streak;
+  const nameInput=document.getElementById("student-name");
+  if(nameInput){nameInput.value=studentName;setName();nameInput.addEventListener("input",setName);}
+  showSetupRec();
+  const notes=document.getElementById("ms-notes");
+  notes.value=pd().notes||"";
+  notes.addEventListener("input",saveNotes);
+  renderTally();renderStars();
+  let ck=null;try{ck=localStorage.getItem("nm_cookies");}catch(e){}
+  if(!ck){const b=document.getElementById("cookie-banner");if(b)b.classList.remove("hidden");}
+  lucide.createIcons();
+});
+</script>
+<script>
+(function(){
+  function buildStars(){const c=document.getElementById("stars");if(!c)return;let h="";
+    for(let i=0;i<85;i++){const s=Math.random()<.8?1:2;const col=Math.random()<.12?"#fbbf24":"#ffffff";
+      h+='<span class="star" style="left:'+(Math.random()*100).toFixed(1)+'%;top:'+(Math.random()*100).toFixed(1)+'%;width:'+(s+(Math.random()<.3?1:0))+'px;height:'+(s+(Math.random()<.3?1:0))+'px;background:'+col+';animation-duration:'+(2+Math.random()*4).toFixed(1)+'s;animation-delay:'+(Math.random()*5).toFixed(1)+'s"></span>';}
+    c.innerHTML=h;}
+  function shoot(){const c=document.getElementById("stars");if(!c||document.hidden)return;
+    const el=document.createElement("span");el.className="shoot";
+    el.style.cssText="left:"+(45+Math.random()*50).toFixed(0)+"%;top:"+(8+Math.random()*40).toFixed(0)+"%;width:"+(90+Math.random()*130).toFixed(0)+"px;animation-duration:"+(0.8+Math.random()*0.8).toFixed(2)+"s";
+    c.appendChild(el);setTimeout(()=>el.remove(),1900);}
+  buildStars();setInterval(shoot,4200);setTimeout(shoot,1200);
+})();
+</script>
+</body>
