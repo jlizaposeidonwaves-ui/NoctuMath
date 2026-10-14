@@ -715,9 +715,9 @@ function openPaywall(){const lm=document.getElementById("lic-msg");if(lm)lm.clas
 function closePaywall(){const m=document.getElementById("paywall2");m.classList.add("hidden");m.classList.remove("flex");}
 // ===== PAYMENTS CONFIG — fill these in from your Lemon Squeezy dashboard =====
 const NM_PAY = {
-  CHECKOUT_MONTHLY: "PASTE_MONTHLY_CHECKOUT_URL",   // Lemon Squeezy checkout link, $4.99/mo variant
-  CHECKOUT_YEARLY:  "PASTE_YEARLY_CHECKOUT_URL",    // Lemon Squeezy checkout link, $39/yr variant
-  CUSTOMER_PORTAL:  "https://noctumath.lemonsqueezy.com/billing"  // your store's customer portal
+  CHECKOUT_MONTHLY: "https://noctumath.lemonsqueezy.com/checkout/buy/629211c1-221c-4406-80a7-bc4124185250?enabled=2248711",
+  CHECKOUT_YEARLY:  "https://noctumath.lemonsqueezy.com/checkout/buy/e673b105-3ae5-4fe8-b392-3402a8791294?enabled=2248694",
+  CUSTOMER_PORTAL:  "https://noctumath.lemonsqueezy.com/billing"
 };
 function startCheckout(){
   const url = plan==="y" ? NM_PAY.CHECKOUT_YEARLY : NM_PAY.CHECKOUT_MONTHLY;
