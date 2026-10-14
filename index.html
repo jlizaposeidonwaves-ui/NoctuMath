@@ -142,7 +142,7 @@ h1,h2,.font-display{font-family:"Fredoka",sans-serif}
 <div id="landing" class="min-h-screen">
   <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
     <div class="flex items-center gap-2.5">
-      <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" style="width:72px;height:72px">
+      <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" class="w-11 h-11 sm:w-[72px] sm:h-[72px]">
 <defs><linearGradient id="lgY" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs>
 <g class="lg-ring"><circle cx="70" cy="74" r="62" fill="none" stroke="#fbbf24" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="3 7"/></g>
 <circle cx="70" cy="76" r="46" fill="url(#lgY)"/>
@@ -205,9 +205,9 @@ h1,h2,.font-display{font-family:"Fredoka",sans-serif}
           <li>✅ Unlimited practice mode with step-by-step help</li>
           <li>✅ Quizzes up to 10 questions with timers</li>
           <li>✅ Tally &amp; star tools, notes, personal profile</li>
-          <li>✅ ⭐ Parent Plan saves progress, streaks &amp; reports</li>
         </ul>
         <button onclick="enterApp()" class="mt-8 bg-slate-700 hover:bg-slate-600 text-white font-display font-bold py-3.5 rounded-2xl transition-all">Start free</button>
+        <p class="text-[11px] text-amber-300/80 text-center mt-2 font-semibold">⭐ Upgrade to Parent Plan to save progress, streaks &amp; reports</p>
       </div>
       <div class="p-8 rounded-3xl bg-gradient-to-b from-amber-400/15 to-transparent border-2 border-amber-400/50 flex flex-col relative">
         <span class="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] font-bold px-3 py-1 rounded-full bg-amber-400 text-slate-900">FOR PARENTS</span>
@@ -245,20 +245,20 @@ h1,h2,.font-display{font-family:"Fredoka",sans-serif}
 </div>
 
 <div id="app" class="hidden">
-<nav class="max-w-5xl mx-auto px-6 pt-6 flex items-center justify-between">
+<nav class="max-w-5xl mx-auto px-3 sm:px-6 pt-6 flex items-center justify-between gap-2">
   <div class="flex items-center gap-2.5">
-    <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" style="width:72px;height:72px">
+    <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" class="w-11 h-11 sm:w-[72px] sm:h-[72px]">
 <defs><linearGradient id="lgY" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs>
 <g class="lg-ring"><circle cx="70" cy="74" r="62" fill="none" stroke="#fbbf24" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="3 7"/></g>
 <circle cx="70" cy="76" r="46" fill="url(#lgY)"/>
 <g class="lg-owl"><image href="icon-512.png" x="34" y="40" width="72" height="72"/></g>
 <text class="lg-sym" style="animation-duration:2.4s;animation-delay:0.0s;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))" x="26" y="42" text-anchor="middle" font-size="24" font-weight="800" fill="#34d399" font-family="Fredoka,Arial">+</text><text class="lg-sym" style="animation-duration:2.75s;animation-delay:0.3s;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))" x="116" y="48" text-anchor="middle" font-size="36" font-weight="800" fill="#fb923c" font-family="Fredoka,Arial">−</text><text class="lg-sym" style="animation-duration:3.0999999999999996s;animation-delay:0.6s;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))" x="12" y="106" text-anchor="middle" font-size="34" font-weight="800" fill="#a78bfa" font-family="Fredoka,Arial">×</text><text class="lg-sym" style="animation-duration:3.4499999999999997s;animation-delay:0.8999999999999999s;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))" x="128" y="106" text-anchor="middle" font-size="34" font-weight="800" fill="#38bdf8" font-family="Fredoka,Arial">÷</text><text class="lg-sym" style="animation-duration:3.8s;animation-delay:1.2s;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))" x="70" y="26" text-anchor="middle" font-size="30" font-weight="800" fill="#fbbf24" font-family="Fredoka,Arial">=</text></svg>
-    <div><b class="text-2xl tracking-tight font-display text-white">Noctu<span class="text-amber-400">Math</span></b><p id="greet" class="text-[10px] font-bold text-slate-500 -mt-1 uppercase tracking-widest">Hoo-ver knew math could be this fun!</p></div>
+    <div><b class="text-2xl tracking-tight font-display text-white">Noctu<span class="text-amber-400">Math</span></b><p id="greet" class="hidden sm:block text-[10px] font-bold text-slate-500 -mt-1 uppercase tracking-widest">Hoo-ver knew math could be this fun!</p></div>
   </div>
   <div class="flex items-center gap-2 text-sm font-bold">
     <button onclick="showView('account')" title="Account settings" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 border border-slate-700 transition-all"><i data-lucide="settings" class="w-4 h-4"></i></button>
-    <span class="flex items-center gap-1.5 bg-slate-800/80 border-2 border-orange-500/40 rounded-full px-4 py-1.5 text-orange-300">🔥<span id="streak">0</span></span>
-    <span class="flex items-center gap-1.5 bg-slate-800/80 border-2 border-yellow-500/40 rounded-full px-4 py-1.5 text-yellow-300">⭐<span id="score">0</span></span>
+    <span class="flex items-center gap-1.5 bg-slate-800/80 border-2 border-orange-500/40 rounded-full px-2.5 py-1 sm:px-4 sm:py-1.5 text-orange-300">🔥<span id="streak">0</span></span>
+    <span class="flex items-center gap-1.5 bg-slate-800/80 border-2 border-yellow-500/40 rounded-full px-2.5 py-1 sm:px-4 sm:py-1.5 text-yellow-300">⭐<span id="score">0</span></span>
     <button onclick="showLanding()" title="Home page" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 border border-slate-700 transition-all"><i data-lucide="home" class="w-4 h-4"></i></button>
     <button onclick="showView('setup')" title="Practice — grades &amp; adventures" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 border border-slate-700 transition-all"><i data-lucide="crosshair" class="w-4 h-4"></i></button>
     <button onclick="proGate('dash')" title="Parent Dashboard ⭐" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 border border-slate-700 transition-all"><i data-lucide="layout-dashboard" class="w-4 h-4"></i></button>
