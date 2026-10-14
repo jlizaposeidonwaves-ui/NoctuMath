@@ -1,0 +1,23 @@
+{
+  "name": "NoctuMath \u2014 Math is Fun When You See How!",
+  "short_name": "NoctuMath",
+  "description": "Free step-by-step K-8 math practice with picture visuals, smart hints and memory tips.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1120",
+  "theme_color": "#0b1120",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
