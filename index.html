@@ -95,8 +95,15 @@ h1,h2,.font-display{font-family:"Fredoka",sans-serif}
     <div id="pw2-done" class="p-10 text-center hidden">
       <div class="text-6xl mb-3 pop">🎉</div>
       <h3 class="text-xl font-display font-bold text-white">Welcome to Parent Plan!</h3>
-      <p class="text-sm text-slate-400 mt-1 mb-5">Everything is unlocked on this device.</p>
-      <button onclick="closePaywall();enterApp()" class="bg-amber-400 text-slate-900 font-display font-bold px-6 py-3 rounded-xl">Continue 🦉</button>
+      <p class="text-sm text-slate-400 mt-1 mb-4">Everything is unlocked on this device.</p>
+      <div class="bg-emerald-500/10 border border-emerald-500/40 rounded-2xl p-4 mb-5 text-left">
+        <p class="text-sm text-emerald-300 font-bold mb-1">☁️ One last step — protect your progress</p>
+        <p class="text-xs text-slate-400 leading-relaxed">Progress saves on this device automatically. To keep it safe if you switch devices or clear the browser, set up free cloud sync — one email, no password, 20 seconds.</p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-2 justify-center">
+        <button onclick="closePaywall();enterApp();showView('account')" class="bg-gradient-to-r from-emerald-500 to-sky-500 text-white font-display font-bold px-6 py-3 rounded-xl">Set up cloud sync ☁️</button>
+        <button onclick="closePaywall();enterApp()" class="bg-slate-700 hover:bg-slate-600 text-slate-300 font-display font-bold px-6 py-3 rounded-xl transition-all">Maybe later</button>
+      </div>
     </div>
   </div>
 </div>
@@ -226,7 +233,8 @@ h1,h2,.font-display{font-family:"Fredoka",sans-serif}
       <details class="bg-slate-800/60 border border-slate-700 rounded-xl px-5 py-4"><summary class="cursor-pointer list-none font-semibold text-sm text-white">Is it really free? 🦉</summary><p class="text-sm text-slate-400 mt-2">Yes — all practice and quizzes are free forever, no account needed. The Parent Plan adds progress visibility and worksheets.</p></details>
       <details class="bg-slate-800/60 border border-slate-700 rounded-xl px-5 py-4"><summary class="cursor-pointer list-none font-semibold text-sm text-white">Is my child's data safe?</summary><p class="text-sm text-slate-400 mt-2">Progress is stored locally on your device. No ads, no trackers, no data selling — and we'll be fully COPPA-compliant before any accounts launch.</p></details>
       <details class="bg-slate-800/60 border border-slate-700 rounded-xl px-5 py-4"><summary class="cursor-pointer list-none font-semibold text-sm text-white">What makes this different from worksheets?</summary><p class="text-sm text-slate-400 mt-2">Every single answer gets a picture explanation and an interactive step-by-step solve — and the app remembers which facts your child misses for targeted review.</p></details>
-      <details class="bg-slate-800/60 border border-slate-700 rounded-xl px-5 py-4"><summary class="cursor-pointer list-none font-semibold text-sm text-white">How does the Parent Plan unlock work? Do I log in every time?</summary><p class="text-sm text-slate-400 mt-2">No logins, no passwords — after checkout you get a license key by email. Paste it once (Parent Plan → "already paid? activate your key") and that device stays unlocked forever. The same key covers the whole family's devices — just paste it once on each. Keep the receipt email; if you ever switch devices or clear browser data, re-paste and you're back in seconds.</p></details>
+      <details class="bg-slate-800/60 border border-slate-700 rounded-xl px-5 py-4"><summary class="cursor-pointer list-none font-semibold text-sm text-white">How does the Parent Plan unlock work? Do I log in every time?</summary><p class="text-sm text-slate-400 mt-2">No passwords — after checkout you get a license key by email. Paste it once (Parent Plan → "already paid? activate your key") and that device stays unlocked forever. The same key covers the whole family's devices — just paste it once on each.</p></details>
+      <details class="bg-slate-800/60 border border-slate-700 rounded-xl px-5 py-4"><summary class="cursor-pointer list-none font-semibold text-sm text-white">What happens if we switch devices or clear the browser?</summary><p class="text-sm text-slate-400 mt-2">With <b class="text-white">cloud sync</b> (free with Parent Plan): nothing is lost — sign in with your email on the new device and all progress, streaks and reports are there. Set it up once in ⚙️ Account Settings → "Cloud sync &amp; your data" — one magic email link, no password. Without sync, progress lives only in that browser, so clearing site data or changing devices starts fresh (your license key still re-unlocks the plan from your receipt email).</p></details>
       <details class="bg-slate-800/60 border border-slate-700 rounded-xl px-5 py-4"><summary class="cursor-pointer list-none font-semibold text-sm text-white">How do I cancel?</summary><p class="text-sm text-slate-400 mt-2">Anytime, in seconds — from Account Settings in the app, or the customer-portal link in your receipt email. No calls, no retention scripts, no hard feelings. You keep access until the end of your paid period, and free practice never goes away. 🦉</p></details>
     </div>
   </section>
@@ -324,6 +332,13 @@ h1,h2,.font-display{font-family:"Fredoka",sans-serif}
 
 <!-- DASHBOARD -->
 <div id="dash" class="max-w-4xl mx-auto px-6 pb-16 hidden">
+  <div id="sync-banner" class="hidden mb-5 bg-emerald-500/10 border border-emerald-500/40 rounded-2xl px-5 py-4 flex items-center justify-between gap-3 flex-wrap">
+    <p class="text-sm text-slate-300">☁️ <b class="text-emerald-300">Progress is only saved on this device.</b> Set up cloud sync so it's safe on any device — takes 20 seconds, no password.</p>
+    <div class="flex gap-2 shrink-0">
+      <button onclick="showView('account')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold px-4 py-2 rounded-xl text-xs transition-all">Set up sync</button>
+      <button onclick="dismissSyncBanner()" class="text-slate-400 hover:text-white px-2 py-2 text-xs font-bold">✕</button>
+    </div>
+  </div>
   <div class="flex items-center justify-between mb-5">
     <h2 class="text-2xl font-display font-bold text-white">📊 Parent Dashboard</h2>
     <div class="flex items-center gap-2">
@@ -579,8 +594,11 @@ function pushQuizRecord(pct){
 /* ---- dashboard ---- */
 function getMisses(){return pd().misses||{};}
 let dashKid=null;
+function dismissSyncBanner(){try{localStorage.setItem("ms_sync_dismissed","1");}catch(e){}const b=document.getElementById("sync-banner");if(b)b.classList.add("hidden");}
+function syncBannerCheck(){const b=document.getElementById("sync-banner");if(!b)return;const show=isPro()&&!sbUser&&localStorage.getItem("ms_sync_dismissed")!=="1";b.classList.toggle("hidden",!show);}
 function renderDash(){
   const body=document.getElementById("dash-body");
+  syncBannerCheck();
   document.getElementById("pro-badge").classList.toggle("hidden",!isPro());
   if(!dashKid||!kids.find(k=>k.id===dashKid))dashKid=msCur;
   const sel=document.getElementById("dash-kid");
