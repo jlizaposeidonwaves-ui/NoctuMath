@@ -220,6 +220,8 @@ h1,h2,.font-display{font-family:"Fredoka",sans-serif}
           <li>⭐ Printable worksheets with answer keys</li>
           <li>⭐ Unlimited quiz length (up to 50 questions)</li>
           <li>⭐ Past problems &amp; full learning history</li>
+          <li>⭐ Weekly goals &amp; rewards you set (ice-cream motivation engine 🍦)</li>
+          <li>⭐ Send your child messages — delivered by Hoot the owl 💌</li>
         </ul>
         <button onclick="openPaywall()" class="mt-7 bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white font-display font-bold py-3.5 rounded-2xl transition-all shadow-lg shadow-orange-900/40">Unlock Parent Plan</button>
         <p class="text-[11px] text-slate-500 text-center mt-2">🔒 Secure checkout by Gumroad · cancel anytime</p>
@@ -235,7 +237,7 @@ h1,h2,.font-display{font-family:"Fredoka",sans-serif}
       <details class="bg-slate-800/60 border border-slate-700 rounded-xl px-5 py-4"><summary class="cursor-pointer list-none font-semibold text-sm text-white">What makes this different from worksheets?</summary><p class="text-sm text-slate-400 mt-2">Every single answer gets a picture explanation and an interactive step-by-step solve — and the app remembers which facts your child misses for targeted review.</p></details>
       <details class="bg-slate-800/60 border border-slate-700 rounded-xl px-5 py-4"><summary class="cursor-pointer list-none font-semibold text-sm text-white">How does the Parent Plan unlock work? Do I log in every time?</summary><p class="text-sm text-slate-400 mt-2">No passwords — after checkout you get a license key by email. Paste it once (Parent Plan → "already paid? activate your key") and that device stays unlocked forever. The same key covers the whole family's devices — just paste it once on each.</p></details>
       <details class="bg-slate-800/60 border border-slate-700 rounded-xl px-5 py-4"><summary class="cursor-pointer list-none font-semibold text-sm text-white">What happens if we switch devices or clear the browser?</summary><p class="text-sm text-slate-400 mt-2">With <b class="text-white">cloud sync</b> (free with Parent Plan): nothing is lost — sign in with your email on the new device and all progress, streaks and reports are there. Set it up once in ⚙️ Account Settings → "Cloud sync &amp; your data" — one magic email link, no password. Without sync, progress lives only in that browser, so clearing site data or changing devices starts fresh (your license key still re-unlocks the plan from your receipt email).</p></details>
-      <details class="bg-slate-800/60 border border-slate-700 rounded-xl px-5 py-4"><summary class="cursor-pointer list-none font-semibold text-sm text-white">How do I cancel?</summary><p class="text-sm text-slate-400 mt-2">Anytime, in seconds — from Account Settings in the app, or the customer-portal link in your receipt email. No calls, no retention scripts, no hard feelings. You keep access until the end of your paid period, and free practice never goes away. 🦉</p></details>
+      <details class="bg-slate-800/60 border border-slate-700 rounded-xl px-5 py-4"><summary class="cursor-pointer list-none font-semibold text-sm text-white">How do I cancel?</summary><p class="text-sm text-slate-400 mt-2">Anytime, in seconds — from Account Settings in the app, or the library link in your receipt email. No calls, no retention scripts, no hard feelings. You keep access until the end of your paid period, and free practice never goes away. 🦉</p></details>
     </div>
   </section>
 
@@ -276,6 +278,7 @@ h1,h2,.font-display{font-family:"Fredoka",sans-serif}
 <!-- SETUP -->
 <div id="setup-rec-wrap" class="max-w-2xl mx-auto px-6 mb-5"></div>
 <div id="setup" class="max-w-2xl mx-auto px-6 pb-16">
+  <div id="kid-goals"></div>
   <div class="bg-slate-800/70 backdrop-blur rounded-[2rem] border-2 border-slate-700 shadow-2xl p-7 space-y-7">
     <div>
       <div id="kid-chips" class="flex flex-wrap justify-center gap-2 mb-4"></div>
@@ -349,6 +352,7 @@ h1,h2,.font-display{font-family:"Fredoka",sans-serif}
     </div>
   </div>
   <div id="dash-body"></div>
+  <div id="dash-goals"></div>
 </div>
 
 <!-- WORKSHEETS -->
@@ -571,6 +575,7 @@ function showView(v){
   if(v==="account")renderAccount();
   if(v==="ws"&&!isPro()){document.getElementById(v).classList.add("hidden");openPaywall();return;}
   if(v==="dash")renderDash();
+  if(v==="setup")renderKidGoals();
   if(v==="past")renderPast();
   if(v==="fbview")renderFbStars();
   if(v==="setup"){renderReviewSlot();
@@ -585,7 +590,9 @@ function logAnswer(op2,ok){
     d.log.push({d:new Date().toISOString().slice(0,10),op:op2,ok:ok,k:op2+":"+cur.a+":"+cur.b});
     if(d.log.length>2000)d.log=d.log.slice(-2000);
     if(!ok){const k=op2+":"+cur.a+":"+cur.b;d.misses[k]=(d.misses[k]||0)+1;}
-    savePd(d);}catch(e){}
+    if(d.reward&&d.reward.target&&!d.reward.done){d.reward.progress=(d.reward.progress||0)+1;if(d.reward.progress>=d.reward.target)d.reward.done=true;}
+    savePd(d);
+    if(d.reward&&d.reward.done&&!d.reward.celebrated){d.reward.celebrated=true;savePd(d);setTimeout(()=>{try{confetti();}catch(e){}alert("🏆 REWARD EARNED!\n\n"+d.reward.prize+"\n\nShow your parent! 🦉");},600);}}catch(e){}
 }
 function pushQuizRecord(pct){
   if(!isPro())return;
@@ -594,6 +601,111 @@ function pushQuizRecord(pct){
 /* ---- dashboard ---- */
 function getMisses(){return pd().misses||{};}
 let dashKid=null;
+
+// ===== GOALS · REWARDS · MESSAGES =====
+function weekStart(){const n=new Date();const day=(n.getDay()+6)%7;const m=new Date(n);m.setDate(n.getDate()-day);return m.toISOString().slice(0,10);}
+function weekCount(id){const ws=weekStart();return (pd(id).log||[]).filter(e=>e.d>=ws).length;}
+function saveGoals(){
+  const d=pd(dashKid);
+  const w=parseInt(document.getElementById("goal-weekly").value)||0;
+  const rt=parseInt(document.getElementById("goal-reward").value)||0;
+  const rp=(document.getElementById("goal-prize").value||"").trim();
+  d.goal={weekly:w};
+  if(rt>0){
+    const prog=(d.reward&&d.reward.target===rt&&d.reward.prize===rp&&!d.reward.done)?(d.reward.progress||0):0;
+    d.reward={target:rt,prize:rp||"a surprise",progress:prog,done:false};
+  }else{d.reward=null;}
+  savePd(d);renderGoals();
+  const b=document.getElementById("goal-save-btn");b.textContent="Saved ✓";setTimeout(()=>b.textContent="Save goals",1500);
+}
+function sendKidMsg(){
+  const inp=document.getElementById("kid-msg");
+  const t=(inp.value||"").trim();if(!t)return;
+  const d=pd(dashKid);d.msgs=d.msgs||[];
+  d.msgs.push({t:t,ts:new Date().toISOString(),read:false});
+  if(d.msgs.length>30)d.msgs=d.msgs.slice(-30);
+  savePd(d);inp.value="";
+  const b=document.getElementById("kid-msg-btn");b.textContent="Sent ✓";setTimeout(()=>b.textContent="Send 💌",1500);
+}
+function renderGoals(){
+  const el=document.getElementById("dash-goals");if(!el)return;
+  const dk=kids.find(k=>k.id===dashKid)||kids[0]||{name:"Student"};
+  const d=pd(dashKid);
+  const weekly=(d.goal&&d.goal.weekly)||0;
+  const wc=weekCount(dashKid);
+  const r=d.reward;
+  const wpct=weekly?Math.min(100,Math.round(wc/weekly*100)):0;
+  const rpct=r&&r.target?Math.min(100,Math.round((r.progress||0)/r.target*100)):0;
+  el.innerHTML=`
+  <div class="grid md:grid-cols-2 gap-4 mt-2">
+    <div class="bg-slate-800/60 border border-slate-700 rounded-3xl p-6">
+      <h3 class="font-display font-bold text-white mb-3">🎯 Goals &amp; reward</h3>
+      <label class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-500 mb-1">Problems this week (Mon–Sun)</label>
+      <input id="goal-weekly" type="number" min="0" value="${weekly||""}" placeholder="e.g. 50" class="w-full bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400 mb-2">
+      ${weekly?`<div class="h-2.5 bg-slate-900 rounded-full overflow-hidden mb-1"><div class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all" style="width:${wpct}%"></div></div>
+      <p class="text-[11px] font-bold ${wpct>=100?"text-emerald-400":"text-slate-500"} mb-3">${wc}/${weekly} done ${wpct>=100?"— goal smashed! 🎉":""}</p>`:`<p class="text-[11px] text-slate-600 mb-3">No weekly goal set yet</p>`}
+      <label class="block text-[10px] font-extrabold uppercase tracking-widest text-slate-500 mb-1">Reward after X problems</label>
+      <input id="goal-reward" type="number" min="0" value="${r?r.target:""}" placeholder="e.g. 30" class="w-full bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400 mb-2">
+      <input id="goal-prize" value="${r?r.prize.replace(/"/g,"&quot;"):""}" placeholder="Prize — e.g. Ice cream night 🍦" class="w-full bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400 mb-2">
+      ${r?`<div class="h-2.5 bg-slate-900 rounded-full overflow-hidden mb-1"><div class="h-full bg-gradient-to-r from-amber-400 to-orange-500 transition-all" style="width:${rpct}%"></div></div>
+      <p class="text-[11px] font-bold ${r.done?"text-amber-300":"text-slate-500"} mb-3">${r.done?`🏆 Earned: ${r.prize}! Time to celebrate — set a new one anytime.`:`${r.progress||0}/${r.target} toward: ${r.prize}`}</p>`:`<p class="text-[11px] text-slate-600 mb-3">No reward set yet</p>`}
+      <button id="goal-save-btn" onclick="saveGoals()" class="bg-gradient-to-r from-emerald-500 to-sky-500 text-white font-display font-bold px-5 py-2.5 rounded-xl text-sm transition-all w-full">Save goals</button>
+      <p class="text-[10px] text-slate-600 mt-2">Changing the reward mid-way resets its progress. Weekly progress counts Mon–Sun.</p>
+    </div>
+    <div class="bg-slate-800/60 border border-slate-700 rounded-3xl p-6">
+      <h3 class="font-display font-bold text-white mb-3">💌 Send ${dk.name} a message</h3>
+      <textarea id="kid-msg" rows="3" placeholder="e.g. So proud of you! 10 more problems and that prize is yours 🦉" class="w-full bg-slate-900 border-2 border-slate-600 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400 resize-none mb-2"></textarea>
+      <button id="kid-msg-btn" onclick="sendKidMsg()" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-display font-bold px-5 py-2.5 rounded-xl text-sm transition-all w-full">Send 💌</button>
+      <p class="text-[10px] text-slate-600 mt-2">Delivered by Hoot the owl next time ${dk.name} opens the app${sbUser?" — on any synced device":""}.</p>
+    </div>
+  </div>`;
+}
+
+
+function renderKidGoals(){
+  const el=document.getElementById("kid-goals");if(!el)return;
+  if(!isPro()){el.innerHTML="";return;}
+  const d=pd();let h="";
+  // unread messages from parents
+  const unread=(d.msgs||[]).filter(m=>!m.read);
+  unread.forEach((m,i)=>{
+    h+=`<div class="mb-4 bg-gradient-to-r from-amber-400/20 to-orange-500/15 border-2 border-amber-400/50 rounded-3xl p-5 pop">
+      <p class="text-[10px] font-extrabold uppercase tracking-widest text-amber-300 mb-1">💌 Hoot delivers a message!</p>
+      <p class="text-white font-display text-lg leading-snug">${m.t.replace(/</g,"&lt;")}</p>
+      <button onclick="markMsgRead(${d.msgs.indexOf(m)})" class="mt-3 bg-amber-400 text-slate-900 font-bold px-5 py-2 rounded-xl text-sm">Got it! 💛</button>
+    </div>`;
+  });
+  // weekly goal
+  const weekly=(d.goal&&d.goal.weekly)||0;
+  if(weekly){
+    const wc=weekCount();const pct=Math.min(100,Math.round(wc/weekly*100));
+    h+=`<div class="mb-4 bg-slate-800/70 border border-slate-700 rounded-2xl px-5 py-4">
+      <div class="flex justify-between text-xs font-bold mb-2"><span class="text-emerald-300">🎯 Weekly mission</span><span class="text-slate-400">${wc}/${weekly} problems ${pct>=100?"· DONE! 🎉":""}</span></div>
+      <div class="h-3 bg-slate-900 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all" style="width:${pct}%"></div></div>
+    </div>`;
+  }
+  // reward
+  const r=d.reward;
+  if(r&&r.target){
+    if(r.done){
+      h+=`<div class="mb-4 bg-gradient-to-r from-amber-400/25 to-orange-500/20 border-2 border-amber-400 rounded-3xl p-6 text-center pop">
+        <div class="text-5xl mb-2">🏆</div>
+        <p class="text-white font-display text-xl font-bold">You did it!</p>
+        <p class="text-amber-300 font-bold mt-1">${r.prize.replace(/</g,"&lt;")} — earned!</p>
+        <p class="text-slate-400 text-xs mt-1">Show this to your parent 🦉</p>
+      </div>`;
+    }else{
+      const pct=Math.min(100,Math.round((r.progress||0)/r.target*100));
+      h+=`<div class="mb-4 bg-slate-800/70 border border-amber-500/30 rounded-2xl px-5 py-4">
+        <div class="flex justify-between text-xs font-bold mb-2"><span class="text-amber-300">🏆 Reward: ${r.prize.replace(/</g,"&lt;")}</span><span class="text-slate-400">${r.progress||0}/${r.target}</span></div>
+        <div class="h-3 bg-slate-900 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-amber-400 to-orange-500 transition-all" style="width:${pct}%"></div></div>
+      </div>`;
+    }
+  }
+  el.innerHTML=h;
+}
+function markMsgRead(i){const d=pd();if(d.msgs&&d.msgs[i]){d.msgs[i].read=true;savePd(d);}renderKidGoals();}
+
 function dismissSyncBanner(){try{localStorage.setItem("ms_sync_dismissed","1");}catch(e){}const b=document.getElementById("sync-banner");if(b)b.classList.add("hidden");}
 function syncBannerCheck(){const b=document.getElementById("sync-banner");if(!b)return;const show=isPro()&&!sbUser&&localStorage.getItem("ms_sync_dismissed")!=="1";b.classList.toggle("hidden",!show);}
 function renderDash(){
@@ -637,6 +749,7 @@ function renderDash(){
     <button onclick="openPaywall()" class="bg-amber-400 text-slate-900 font-display font-bold px-5 py-2.5 rounded-xl text-sm">Unlock Parent Plan</button></div></div>`;
   h+=isPro()?histHTML(quizzes,true):lock;
   body.innerHTML=h;
+  if(isPro())renderGoals();else document.getElementById("dash-goals").innerHTML="";
 }
 function histHTML(quizzes,full){
   let rows=quizzes.slice(0,full?10:4).map(q=>`<tr class="border-b border-slate-800"><td class="py-2 pr-3 text-slate-400 text-xs">${q.d}</td><td class="py-2 pr-3 text-slate-300 text-xs capitalize">${q.op}</td><td class="py-2 pr-3 text-white font-bold text-xs">${q.correct}/${q.total}</td><td class="py-2 text-xs font-bold ${q.pct>=70?"text-emerald-400":"text-rose-400"}">${q.pct}%</td></tr>`).join("");
